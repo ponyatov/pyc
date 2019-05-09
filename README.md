@@ -1,8 +1,9 @@
-# ![](https://github.com/ponyatov/pyc/wiki/hedge64x64.png) pyC
+![@image html https://github.com/ponyatov/pyc/wiki/hedge64x64.png](https://github.com/ponyatov/pyc/wiki/hedge64x64.png)
+# pyC
 ## embedded C code autogen
 
-
-low-level programming using **any highest level language** (Python, Scala, Haskell,..)
+low-level programming using *code generation*
+in **any highest level language** (Python, Scala, Haskell,..)
 
 (c) Dmitry Ponyatov <<dponyatov@gmail.com>> CC BY-NC-ND
 
