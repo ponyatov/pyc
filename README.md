@@ -1,5 +1,6 @@
-# pyC
+# ![](https://github.com/ponyatov/pyc/wiki/hedge64x64.png) pyC
 ## embedded C code autogen
+
 
 low-level programming using **any highest level language** (Python, Scala, Haskell,..)
 
