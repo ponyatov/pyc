@@ -5,8 +5,9 @@ DEMO = hello/
 
 all: doxy hello.log
 
-%.log: %.py pyc.py frame.py
+hello.log: hello.py pyc.py frame.py
 	python $< > $@ && tail $(TAIL) $@
+	$(MAKE) -C hello
 	
 merge:
 	git checkout master

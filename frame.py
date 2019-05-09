@@ -2,6 +2,7 @@
 ## @ref mmframe extended with nested elements for attribute grammar and AST processing
 
 import os,sys 
+from __builtin__ import isinstance
 
 ## @defgroup frame Frame system
 ## @ref mmframe system
@@ -47,6 +48,14 @@ class Frame:
     ## generate (to disk files)
     def gen(self,parent=None):
         for i in self.nest: i.gen()
+        
+## primitive types
+class Primitive(Frame):
+    def gen(self):
+        return self.val
+
+## string
+class String(Primitive): pass
 
 ## input/output
 class IO(Frame): pass
@@ -66,7 +75,13 @@ class File(IO):
     def gen(self,parent=None):
         name = self.val
         if parent: name = parent.val + '/' + name
-        open(name,'w').close()
-        print 'gen',name
+        file = open(name,'w')
+        print self.gen,name
+        for i in self.nest: print >>file,i.gen()
+        file.close()
+    ## override for plain strings
+    def __floordiv__(self,obj):
+        if isinstance(obj,str): self // String(obj) # wrap
+        else: IO.__floordiv__(self, obj)
 
 ## @}
