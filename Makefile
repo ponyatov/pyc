@@ -4,6 +4,7 @@ all: doxy hello.log
 	python $< > $@ && tail $(TAIL) $@
 	
 update:
+	git pull
 	cd wiki ; git pull
 
 doxy: doxy.gen *.py wiki/*
