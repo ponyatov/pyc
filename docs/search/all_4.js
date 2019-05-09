@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['low_2dlevel_2dprogramming',['low-level-programming',['../md_wiki_low-level-programming.html',1,'']]]
+  ['low_2dlevel_20programming',['Low-level programming',['../md_wiki_low-level-programming.html',1,'']]]
 ];
