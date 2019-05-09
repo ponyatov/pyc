@@ -72,8 +72,20 @@ $(function() {
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
 <tr class="memitem:gabc41fe67133136baf12905a175ead975"><td class="memItemLeft" align="right" valign="top">
-&#160;</td><td class="memItemRight" valign="bottom"><b>hello.module</b> = Module()</td></tr>
+&#160;</td><td class="memItemRight" valign="bottom"><b>hello.module</b> = Module('hello')</td></tr>
 <tr class="separator:gabc41fe67133136baf12905a175ead975"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaeb22fcbd5a2bc1838e86b2a419f48ca4"><td class="memItemLeft" align="right" valign="top">
+&#160;</td><td class="memItemRight" valign="bottom"><b>hello.dir</b> = Dir(module.val) ; module // dir</td></tr>
+<tr class="separator:gaeb22fcbd5a2bc1838e86b2a419f48ca4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8583c26d5473366765303af6a767a08c"><td class="memItemLeft" align="right" valign="top">
+&#160;</td><td class="memItemRight" valign="bottom"><b>hello.mk</b> = mkFile('Makefile') ; dir // mk</td></tr>
+<tr class="separator:ga8583c26d5473366765303af6a767a08c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7c04f68f64948b9825fc1d51d4e083a5"><td class="memItemLeft" align="right" valign="top">
+&#160;</td><td class="memItemRight" valign="bottom"><b>hello.cc</b> = cFile(module.val+'.c') ; dir // cc</td></tr>
+<tr class="separator:ga7c04f68f64948b9825fc1d51d4e083a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9eb2c42eea4d0ef194e6b57a34c0a62b"><td class="memItemLeft" align="right" valign="top">
+&#160;</td><td class="memItemRight" valign="bottom"><b>hello.hh</b> = hFile(module.val+'.h') ; dir // hh</td></tr>
+<tr class="separator:ga9eb2c42eea4d0ef194e6b57a34c0a62b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><code>demo</code>: <code>Hello World</code> </p>

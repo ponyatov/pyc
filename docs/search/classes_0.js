@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['frame',['Frame',['../classframe_1_1Frame.html',1,'frame']]]
+  ['cfile',['cFile',['../classpyc_1_1cFile.html',1,'pyc']]]
 ];

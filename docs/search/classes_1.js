@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['module',['Module',['../classpyc_1_1Module.html',1,'pyc']]]
+  ['dir',['Dir',['../classframe_1_1Dir.html',1,'frame']]]
 ];

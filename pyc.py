@@ -11,7 +11,16 @@ from frame import *
 
 ## software (compilation) module
 class Module(Frame):
-    def __init__(self,V=sys.argv[0].split('.')[0]):
+    def __init__(self,V):
         Frame.__init__(self,V)
+
+## GNU `Makefile`
+class mkFile(File): pass
+
+## generic C files
+class cFile(File): pass
+
+## headers file
+class hFile(cFile): pass
 
 ## @}

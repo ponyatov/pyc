@@ -1,6 +1,8 @@
 PY  = pyc.py frame.py
 PY += hello.py
 
+DEMO = hello/
+
 all: doxy hello.log
 
 %.log: %.py pyc.py frame.py
@@ -8,7 +10,7 @@ all: doxy hello.log
 	
 merge:
 	git checkout master
-	git checkout ponyatov -- Makefile doxy.gen $(PY)
+	git checkout ponyatov -- Makefile doxy.gen $(PY) $(DEMO)
 	$(MAKE) doxy
 	
 update:

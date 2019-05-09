@@ -1,3 +1,9 @@
 <map id="frame.Frame" name="frame.Frame">
-<area shape="rect" id="node2" href="$classpyc_1_1Module.html" title="software (compilation) module " alt="" coords="9,80,98,107"/>
+<area shape="rect" id="node2" href="$classframe_1_1IO.html" title="input/output " alt="" coords="57,80,131,107"/>
+<area shape="rect" id="node8" href="$classpyc_1_1Module.html" title="software (compilation) module " alt="" coords="155,80,244,107"/>
+<area shape="rect" id="node3" href="$classframe_1_1Dir.html" title="directory " alt="" coords="5,155,81,181"/>
+<area shape="rect" id="node4" href="$classframe_1_1File.html" title="generic file " alt="" coords="106,155,186,181"/>
+<area shape="rect" id="node5" href="$classpyc_1_1cFile.html" title="generic C files " alt="" coords="57,229,131,256"/>
+<area shape="rect" id="node7" href="$classpyc_1_1mkFile.html" title="GNU Makefile " alt="" coords="156,229,243,256"/>
+<area shape="rect" id="node6" href="$classpyc_1_1hFile.html" title="headers file " alt="" coords="57,304,131,331"/>
 </map>

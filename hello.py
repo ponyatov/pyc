@@ -10,8 +10,16 @@
 
 from pyc import *
 
-module = Module()
+module = Module('hello')
 
-print module
+dir = Dir(module.val)       ; module // dir
+
+mk = mkFile('Makefile')     ; dir // mk
+
+cc = cFile(module.val+'.c') ; dir // cc
+
+hh = hFile(module.val+'.h') ; dir // hh
+
+print module ; module.gen()
 
 ## @}
