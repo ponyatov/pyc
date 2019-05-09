@@ -1,8 +1,14 @@
+PY  = pyc.py frame.py
+PY += hello.py
+
 all: doxy hello.log
 
-%.log: %.py pyc.py
+%.log: %.py pyc.py frame.py
 	python $< > $@ && tail $(TAIL) $@
 	
+merge:
+	git checkout master
+	git checkout ponyatov -- Makefile doxy.gen $(PY)
 update:
 	git pull
 	cd wiki ; git pull

@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['pyc',['pyC',['../group__pyc.html',1,'']]],
-  ['pyc_2epy',['pyc.py',['../pyc_8py.html',1,'']]]
+  ['low_2dlevel_20programming',['Low-level programming',['../md_wiki_low-level-programming.html',1,'']]]
 ];

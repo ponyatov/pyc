@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['hello_2epy',['hello.py',['../hello_8py.html',1,'']]],
-  ['home',['Home',['../md_wiki_Home.html',1,'']]]
+  ['embedded_20c',['embedded C',['../md_wiki_embedded-C.html',1,'']]],
+  ['embedded_20linux',['embedded Linux',['../md_wiki_embedded-Linux.html',1,'']]]
 ];

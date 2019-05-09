@@ -1,10 +1,12 @@
 var indexSectionsWithContent =
 {
-  0: "cefhlmp",
+  0: "_cdefhlmnpstv",
   1: "fm",
   2: "fhp",
-  3: "fp",
-  4: "cehlm"
+  3: "_",
+  4: "nstv",
+  5: "dfhp",
+  6: "cehlm"
 };
 
 var indexSectionNames =
@@ -12,8 +14,10 @@ var indexSectionNames =
   0: "all",
   1: "classes",
   2: "files",
-  3: "groups",
-  4: "pages"
+  3: "functions",
+  4: "variables",
+  5: "groups",
+  6: "pages"
 };
 
 var indexSectionLabels =
@@ -21,7 +25,9 @@ var indexSectionLabels =
   0: "All",
   1: "Classes",
   2: "Files",
-  3: "Modules",
-  4: "Pages"
+  3: "Functions",
+  4: "Variables",
+  5: "Modules",
+  6: "Pages"
 };
 
