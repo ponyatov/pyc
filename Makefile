@@ -9,6 +9,8 @@ all: doxy hello.log
 merge:
 	git checkout master
 	git checkout ponyatov -- Makefile doxy.gen $(PY)
+	$(MAKE) doxy
+	
 update:
 	git pull
 	cd wiki ; git pull
