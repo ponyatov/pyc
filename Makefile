@@ -14,7 +14,10 @@ PEP  = $(shell which autopep8)
 # src
 C += $(wildcard src/*.c*)
 H += $(wildcard inc/*.c*)
-Y += $(wildcard pyc/*.py)
+Y += $(wildcard pyc/*.py) $(wildcard pyc/core/*.py) $(wildcard pyc/os/*.py)
+Y += $(wildcard pyc/db/*.py) $(wildcard pyc/gui/*.py)
+Y += $(wildcard pyc/game/*.py) $(wildcard pyc/cad/*.py)
+Y += $(wildcard pyc/hw/*.py) $(wildcard pyc/hw/mcu/*.py)
 S += $(wildcard lib/*.s*)
 
 # all
@@ -30,8 +33,12 @@ tmp/format_py: $(Y) $(S)
 	$(PEP) --ignore $(PEPS) -i $? && touch $@
 tmp/format_cpp: $(C) $(H)
 
-
 # doc 
+.PHONY: doxy
+doxy: .doxygen
+# $(C) $(H) $(Y) $(S) README.md
+	rm -rf docs ; doxygen $< 1>/dev/null
+
 .PHONY: doc
 doc: \
 	doc/Peter_Sestoft_Programming_Language_Concepts.pdf \

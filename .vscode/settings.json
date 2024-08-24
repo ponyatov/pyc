@@ -15,12 +15,13 @@
         { "command": "multiCommand.alts",
             "sequence": [ "workbench.action.files.saveAll",
                 { "command": "workbench.action.terminal.sendSequence",
-                    "args": {"text": "\u000D clear ; LANG=C make format \u000D"}}]},
+                    "args": {"text": "\u000D clear ; LANG=C make format doxy \u000D"}}]},
     ],
 
     // files
     "files.exclude": {
         "**/__pycache__": true,
+        "docs/**": true,
     },
     "files.associations": {
         "*.s": "python"
