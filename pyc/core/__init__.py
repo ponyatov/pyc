@@ -86,21 +86,8 @@ class Tree(Container): pass
 ## @ingroup meta
 class Meta(Object): pass
 
-## @defgroup syntax syntax
-## @brief input/target languages syntax & parsers
-## @ingroup meta
+import syntax
 
-## @brief language syntax
-## @ingroup syntax
-class Syntax(Meta): pass
-
-## @brief token lexer
-## @ingroup syntax
-class Lexer(Syntax): pass
-
-## @brief @ref syntax parser
-## @ingroup syntax
-class Parser(Syntax): pass
 
 ## @brief ANSI C
 ## @ingroup syntax

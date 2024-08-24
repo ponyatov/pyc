@@ -21,7 +21,7 @@ def t_num(t):
 
 def t_int(t):
     r'[+\-]?[0-9]+'
-    t.value = int(t.value); return t
+    t.value = Int(t.value); return t
 
 t_lp = '\('; t_rp = '\)'
 
