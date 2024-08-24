@@ -1,8 +1,16 @@
 ## @file
-## @brief syntax parser
+## @brief `pyc` syntax parser
+
+from pyc.core.primitive import Int
+
+## @defgroup parser parser
+## @brief `pyc` syntax parser
+## @ingroup core
 
 import ply.lex as lex
 
+## @ingroup parser
+## @brief `pyc` lang tokens
 tokens = ['nl', 'use', 'num', 'int', 'sym',
           'lp', 'rp', 'plus', 'minus', 'star', 'slash']
 
