@@ -5,8 +5,11 @@
 ## @brief File I/O
 ## @ingroup core
 
+from pyc.core import Object
+
 ## @brief I/O
 ## @ingroup io
+
 class IO(Object): pass
 
 ## @brief file path
