@@ -7,6 +7,7 @@ CWD = $(CURDIR)
 
 # tool
 CURL = curl -L -o
+CF   = clang-format -style=file -i
 PY   = $(shell which python3)
 PIP  = $(shell which pip3)
 PEP  = $(shell which autopep8)
@@ -22,8 +23,7 @@ S += $(wildcard lib/*.s*)
 
 # all
 .PHONY: all
-all: $(C) $(H)
-$(C) $(H): $(PY) $(MODULE)/$(MODULE).py $(S)
+all: $(PY) $(MODULE)/$(MODULE).py $(S)
 	$^
 
 # format
@@ -32,6 +32,7 @@ format: tmp/format_py tmp/format_cpp
 tmp/format_py: $(Y) $(S)
 	$(PEP) --ignore $(PEPS) -i $? && touch $@
 tmp/format_cpp: $(C) $(H)
+	$(CF) $? && touch $@
 
 # doc 
 .PHONY: doxy
