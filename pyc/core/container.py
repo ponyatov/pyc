@@ -5,6 +5,7 @@
 ## @brief data collection
 ## @ingroup core
 
+from core import Object
 
 ## @brief data collection
 ## @ingroup container

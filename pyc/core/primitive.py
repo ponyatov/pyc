@@ -1,6 +1,9 @@
 ## @file
 ## @brief primitive/scalar element
 
+from core import Object
+from core.container import Tree
+
 ## @defgroup primitive primitive
 ## @brief primitive/scalar element
 ## @ingroup core
@@ -31,7 +34,13 @@ class Float(Num): pass
 
 ## @brief integer
 ## @ingroup primitive
-class Int(Num): pass
+class Int(Num):
+    def __init__(self, V):
+        match V:
+            case int(V): self.value = V
+            case float(V): self.value = int(V)
+            case str(V): self.value = int(V)
+            case _: raise TypeError(type(V))
 
 ## @ingroup primitive
 class Hex(Int): pass

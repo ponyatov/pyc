@@ -15,3 +15,7 @@ def main(argv=sys.argv):
             parser.toks(src.read())
 
 if __name__ == '__main__': main()
+
+## @defgroup repl repl
+## @brief REPL: Read-Eval-Print Loop
+## @ingroup compiler
