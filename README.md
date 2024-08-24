@@ -10,5 +10,6 @@ github: https://github.com/ponyatov/pyc/tree/dev
 **Programming Language Concepts**
 *Peter Sestoft*
 
-**Garbage Collection: Algorithms for Automatic Dynamic Memory Management**
-*Richard Jones, Rafael Lins*
+**[[Garbage Collection Algorithms]]**
+*Automatic Dynamic Memory Management*
+*[[Richard Jones]], [[Rafael Lins]]*

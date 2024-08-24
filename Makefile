@@ -1,18 +1,19 @@
 # tool
 CURL = curl -L -o
-PY   = $(which python3)
-PIP  = $(which pip3)
-PEP  = $(which autopep8)
+PY   = $(shell which python3)
+PIP  = $(shell which pip3)
+PEP  = $(shell which autopep8)
 
 # src
 C += $(wildcard  src/*.c*)
 H += $(wildcard  inc/*.c*)
 Y += $(wildcard cmpl/*.py)
+S += $(wildcard  lib/*.s*)
 
 # all
 .PHONY: all
 all: $(C) $(H)
-$(C) $(H): $(PY) $(Y)
+$(C) $(H): $(PY) $(Y) $(S)
 	$^
 
 
