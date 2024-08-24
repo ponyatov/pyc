@@ -1,4 +1,4 @@
-import os,sys,re
+import os, sys, re
 
 import parser
 
