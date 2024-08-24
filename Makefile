@@ -1,3 +1,9 @@
+# var
+MODULE = $(notdir $(CURDIR))
+
+# dirs
+CWD = $(CURDIR)
+
 # tool
 CURL = curl -L -o
 PY   = $(shell which python3)
@@ -5,15 +11,15 @@ PIP  = $(shell which pip3)
 PEP  = $(shell which autopep8)
 
 # src
-C += $(wildcard  src/*.c*)
-H += $(wildcard  inc/*.c*)
-Y += $(wildcard cmpl/*.py)
-S += $(wildcard  lib/*.s*)
+C += $(wildcard src/*.c*)
+H += $(wildcard inc/*.c*)
+Y += $(wildcard pyc/*.py)
+S += $(wildcard lib/*.s*)
 
 # all
 .PHONY: all
 all: $(C) $(H)
-$(C) $(H): $(PY) $(Y) $(S)
+$(C) $(H): $(PY) $(MODULE)/$(MODULE).py $(S)
 	$^
 
 
