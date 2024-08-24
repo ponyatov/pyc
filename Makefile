@@ -16,7 +16,7 @@ PEP  = $(shell which autopep8)
 C += $(wildcard src/*.c*)
 H += $(wildcard inc/*.c*)
 Y += $(wildcard pyc/*.py) $(wildcard pyc/core/*.py) $(wildcard pyc/os/*.py)
-Y += $(wildcard pyc/syntax/*.py)
+Y += $(wildcard pyc/test/*.py) $(wildcard pyc/syntax/*.py)
 Y += $(wildcard pyc/db/*.py) $(wildcard pyc/gui/*.py) $(wildcard pyc/media/*.py)
 Y += $(wildcard pyc/game/*.py) $(wildcard pyc/cad/*.py) $(wildcard pyc/math/*.py)
 Y += $(wildcard pyc/hw/*.py) $(wildcard pyc/hw/mcu/*.py)
@@ -26,6 +26,14 @@ S += $(wildcard lib/*.s*)
 .PHONY: all
 all: $(PY) $(MODULE)/$(MODULE).py $(S)
 	$^
+
+# test
+.PHONY: test
+test: pytest
+
+.PHONY: pytest
+pytest:$(Y) $(S)
+	$@
 
 # format
 .PHONY: format
@@ -39,7 +47,7 @@ tmp/format_cpp: $(C) $(H)
 .PHONY: doxy
 doxy: .doxygen
 # $(C) $(H) $(Y) $(S) README.md
-	rm -rf docs ; doxygen $< 1>/dev/null
+	rm -rf docs ; doxygen $< 1>/dev/null &
 
 .PHONY: doc
 doc: \
