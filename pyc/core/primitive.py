@@ -10,7 +10,9 @@ from core.container import Tree
 
 ## @brief primitive/scalar element
 ## @ingroup primitive
-class Primitive(Object): pass
+class Primitive(Object):
+    ## @brief most @ref primitive s return themself
+    def eval(self): return self
 
 ## @brief symbol
 ## @ingroup primitive
@@ -37,10 +39,19 @@ class Float(Num): pass
 class Int(Num):
     def __init__(self, V):
         match V:
-            case int(V): self.value = V
-            case float(V): self.value = int(V)
-            case str(V): self.value = int(V)
+            case int(V): super().__init__(V)
+            case float(V): super().__init__(int(V))
+            case str(V): super().__init__(int(V))
             case _: raise TypeError(type(V))
+
+    ## @name operator
+
+    ## @brief `+`
+    def __add__(self, o):
+        match o:
+            case Int(): return Int(self.value + o.value)
+            case _: raise TypeError(o)
+
 
 ## @ingroup primitive
 class Hex(Int): pass

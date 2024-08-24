@@ -29,6 +29,12 @@ class Object:
     ## @brief iterate object thru its @ref nest ed elements
     def __iter__(self): return iter(self.nest)
 
+    ## @brief `o[i]` operation
+    def __getitem__(self, idx):
+        match idx:
+            case int(idx): return self.nest[idx]
+            case _: raise TypeError(idx)
+
     ## @brief // push operator
     ## @param[in] o object
     def __floordiv__(self, o):
@@ -59,10 +65,10 @@ class Object:
     ## stringed @ref value
     def val(self): return f'{self.value}'
 
-# import primitive
-# import container
-# import meta
-# import io
-# import net
-# import ext
-# import syntax
+    ## @name computation
+
+    ## @brief evaluate object as attributed AST
+    ##
+    ## must raise exception as unevaluable
+    ## (mostly error with undefined @ref eval () in inherited classes)
+    def eval(self): raise NotImplementedError(self)
