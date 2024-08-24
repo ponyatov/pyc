@@ -8,10 +8,10 @@ doc: \
 	doc/Garbage.Collection.Algorithms.for.Automatic.Dynamic.Memory.Management.pdf
 
 doc/Peter_Sestoft_Programming_Language_Concepts.pdf:
-	$(CURL) $@ https://github.com/ponyatov/pyc/releases/download/init/Peter_Sestoft_Programming_Language_Concepts.pdf &
+	$(CURL) $@ -sS https://github.com/ponyatov/pyc/releases/download/init/Peter_Sestoft_Programming_Language_Concepts.pdf &
 
 doc/Garbage.Collection.Algorithms.for.Automatic.Dynamic.Memory.Management.pdf:
-	$(CURL) $@ https://github.com/ponyatov/pyc/releases/download/init/Garbage.Collection.Algorithms.for.Automatic.Dynamic.Memory.Management.pdf &
+	$(CURL) $@ -sS https://github.com/ponyatov/pyc/releases/download/init/Garbage.Collection.Algorithms.for.Automatic.Dynamic.Memory.Management.pdf &
 
 # install
 .PHONY: install update ref gz
