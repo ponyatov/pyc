@@ -18,7 +18,7 @@ tokens = ['nl', 'import', 'num', 'int', 'sym',
 
 ## drop spaces
 ## @ingroup lexer
-t_ignore_spaces = '\s\t\r'
+t_ignore_spaces = '\s\r'
 ## '#' line comments
 ## @ingroup lexer
 t_ignore_comment = '\#.*'

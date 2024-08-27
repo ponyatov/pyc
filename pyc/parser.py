@@ -15,11 +15,12 @@ def p_syntax_none(p):
     ' syntax : '
     pass
 def p_syntax_recur(p):
-    ' syntax : syntax nl '
-    pass
-def p_syntax_recur(p):
     ' syntax : syntax ex '
-    print(p[2])
+    if p[2]: print(p[2])
+
+def p_ex_nl(p):
+    ' ex : nl '
+    pass
 
 def p_ex_parens(p):
     ' ex : lp ex rp '

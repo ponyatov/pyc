@@ -1,7 +1,8 @@
 # line comment
 
 import
-z std
+z
+std
 
 # 01
 
