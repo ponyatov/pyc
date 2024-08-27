@@ -1,7 +1,8 @@
 ## @file
 ## @brief tokenizer
 
-from core.primitive import Int
+from core.primitive import Float, Int, Sym
+from core.active import Op
 
 ## @defgroup lexer lexer
 ## @brief tokenizer
@@ -9,9 +10,10 @@ from core.primitive import Int
 
 import ply.lex as lex
 
+
 ## @brief `pyc` lang tokens
 ## @ingroup lexer
-tokens = ['nl', 'use', 'num', 'int', 'sym',
+tokens = ['nl', 'import', 'num', 'int', 'sym',
           'lp', 'rp', 'plus', 'minus', 'star', 'slash']
 
 ## drop spaces
@@ -24,15 +26,17 @@ t_ignore_comment = '\#.*'
 ## @ingroup lexer
 def t_nl(t):
     r'\n+'
-    t.lineno += len(t.value)
+    t.lexer.lineno += len(t.value); return t
 
 ## @ingroup lexer
-t_use = 'use'
+def t_import(t):
+    'import\s+'
+    return t
 
 ## @ingroup lexer
 def t_num(t):
     r'[+\-]?[0-9]+\.[0-9]+'
-    t.value = float(t.value); return t
+    t.value = Float(t.value); return t
 
 ## @ingroup lexer
 def t_int(t):
@@ -43,11 +47,23 @@ def t_int(t):
 t_lp = '\('; t_rp = '\)'
 
 ## @ingroup lexer
-t_plus = '\+'; t_minus = '-'; t_star = '\*'; t_slash = '/'
+def t_plus(t):
+    '\+'
+    t.value = Op(t.value); return t
+def t_minus(t):
+    '\-'
+    t.value = Op(t.value); return t
+def t_star(t):
+    '\*'
+    t.value = Op(t.value); return t
+def t_slash(t):
+    '\/'
+    t.value = Op(t.value); return t
 
 ## @ingroup lexer
 def t_sym(t):
     r'[a-z]+'
+    t.value = Sym(t.value); return t
 
 ## @ingroup lexer
 def t_error(t): raise SyntaxError(t)

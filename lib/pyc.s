@@ -1,7 +1,10 @@
 # line comment
 
-use std
+import
+z std
 
-(-01 + +02 * -03.40) / -05e+06
+# 01
 
-nop halt
+# (-01 + +02 * -03.40) / -05e+06
+
+# nop halt

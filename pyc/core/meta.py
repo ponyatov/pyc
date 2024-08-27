@@ -5,9 +5,12 @@
 ## @brief metaprogramming
 ## @ingroup core
 
-from pyc.core import Object
+from core import Object
 
 ## @brief metaprogramming
 ## @ingroup meta
-
 class Meta(Object): pass
+
+## @brief module
+## @ingroup meta
+class Module(Meta): pass
