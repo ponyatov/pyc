@@ -44,7 +44,7 @@ class Object:
             case _: raise TypeError(type(o))
 
     ## @name dump/stringify
-    def __repr__(self): return self.head()
+    def __repr__(self): return self.dump()
 
     ## @brief full test tree dump
     ## @param[in] depth current tree padding
@@ -54,7 +54,8 @@ class Object:
         def pad(depth): return '\n' + '\t' * depth
         ret = pad(depth) + self.head(test)
         # nest[]ed
-        for i in self: ret += i.dump(depth + 1, test)
+        for i in self.nest: ret += i.dump(depth + 1, test)
+        # result
         return ret
 
     def head(self, test=False):

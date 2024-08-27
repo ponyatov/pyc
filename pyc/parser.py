@@ -6,10 +6,14 @@
 ## @ingroup compiler
 
 from lexer import tokens, lexer
+from core.meta import Module
 
 import ply.yacc as yacc
 
-from core.meta import Module
+precedence = (
+    ('left', 'plus', 'minus'),
+    ('left', 'star', 'slash'),
+)
 
 def p_syntax_none(p):
     ' syntax : '
@@ -41,16 +45,16 @@ def p_ex_sym(p):
 
 def p_ex_add(p):
     ' ex : ex plus ex '
-    p[0] = p[2] // p[1] // p[2]
+    p[0] = p[2] // p[1] // p[3]
 def p_ex_sub(p):
     ' ex : ex minus ex '
-    p[0] = p[2] // p[1] // p[2]
+    p[0] = p[2] // p[1] // p[3]
 def p_ex_mul(p):
     ' ex : ex star ex '
-    p[0] = p[2] // p[1] // p[2]
+    p[0] = p[2] // p[1] // p[3]
 def p_ex_div(p):
     ' ex : ex slash ex '
-    p[0] = p[2] // p[1] // p[2]
+    p[0] = p[2] // p[1] // p[3]
 
 def p_error(p): raise SyntaxError(p)
 
