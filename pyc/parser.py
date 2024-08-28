@@ -24,7 +24,6 @@ def p_syntax_nl(p):
     p_ast = []
 def p_syntax_recur(p):
     ' syntax : syntax ex '
-    # if p[2]: print(p[2])
     if p[2]: print(p[2].eval())
 
 def p_ex_parens(p):

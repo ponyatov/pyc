@@ -67,6 +67,27 @@ class Int(Num):
             case Float(): return Float(self.value + o.value)
             case _: raise TypeError(o)
 
+    ## @brief `-`
+    def __sub__(self, o):
+        match o:
+            case Int(): return Int(self.value - o.value)
+            case Float(): return Float(self.value - o.value)
+            case _: raise TypeError(o)
+
+    ## @brief `*`
+    def __mul__(self, o):
+        match o:
+            case Int(): return Int(self.value * o.value)
+            case Float(): return Float(self.value * o.value)
+            case _: raise TypeError(o)
+
+    ## @brief `/`
+    def __div__(self, o):
+        match o:
+            case Int(): return Int(self.value / o.value)
+            case Float(): return Float(self.value / o.value)
+            case _: raise TypeError(o)
+
 
 ## @ingroup primitive
 class Hex(Int): pass

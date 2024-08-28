@@ -30,4 +30,8 @@ class Op(Active):
                 match self.nest:
                     case [a, b]: return a.eval() * b.eval()
                     case _: raise NotImplementedError(self)
+            case '/':
+                match self.nest:
+                    case [a, b]: return a.eval() / b.eval()
+                    case _: raise NotImplementedError(self)
             case _: raise NotImplementedError(self)
