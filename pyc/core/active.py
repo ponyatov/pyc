@@ -16,5 +16,18 @@ class Active(Object): pass
 class Op(Active):
     def eval(self):
         match self.value:
-            case '+': return self[0].eval() + self[1].eval()
+            case '+':
+                match self.nest:
+                    case [unary]: return +unary.eval()
+                    case [a, b]: return a.eval() + b.eval()
+                    case _: raise NotImplementedError(self)
+            case '-':
+                match self.nest:
+                    case [unary]: return -unary.eval()
+                    case [a, b]: return a.eval() - b.eval()
+                    case _: raise NotImplementedError(self)
+            case '*':
+                match self.nest:
+                    case [a, b]: return a.eval() * b.eval()
+                    case _: raise NotImplementedError(self)
             case _: raise NotImplementedError(self)

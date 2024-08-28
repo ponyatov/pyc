@@ -13,4 +13,5 @@ class Meta(Object): pass
 
 ## @brief module
 ## @ingroup meta
-class Module(Meta): pass
+class Module(Meta):
+    def eval(self): return self

@@ -12,7 +12,7 @@ import parser
 def main(argv=sys.argv):
     for sfile in sys.argv[1:]:
         with open(sfile) as src:
-            parser.ast(src.read())
+            parser.eval(src.read())
 
 if __name__ == '__main__': main()
 

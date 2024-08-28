@@ -35,12 +35,12 @@ def t_import(t):
 
 ## @ingroup lexer
 def t_num(t):
-    r'[+\-]?[0-9]+\.[0-9]+'
+    r'[0-9]+(\.[0-9]*+)?[eE][+\-]?[0-9]+ | [0-9]+\.[0-9]+'
     t.value = Float(t.value); return t
 
 ## @ingroup lexer
 def t_int(t):
-    r'[+\-]?[0-9]+'
+    r'[0-9]+'
     t.value = Int(t.value); return t
 
 ## @ingroup lexer

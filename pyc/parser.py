@@ -13,14 +13,16 @@ import ply.yacc as yacc
 precedence = (
     ('left', 'plus', 'minus'),
     ('left', 'star', 'slash'),
+    ('right', 'pfx')
 )
 
 def p_syntax_none(p):
     ' syntax : '
-    pass
+    p_ast = []
 def p_syntax_recur(p):
     ' syntax : syntax ex '
-    if p[2]: print(p[2])
+    # if p[2]: print(p[2])
+    if p[2]: print(p[2].eval())
 
 def p_ex_nl(p):
     ' ex : nl '
@@ -42,6 +44,13 @@ def p_ex_import(p):
 def p_ex_sym(p):
     ' ex : sym '
     p[0] = p[1]
+
+def p_ex_plus(p):
+    ' ex : plus ex %prec pfx '
+    p[0] = p[1] // p[2]
+def p_ex_minus(p):
+    ' ex : minus ex %prec pfx '
+    p[0] = p[1] // p[2]
 
 def p_ex_add(p):
     ' ex : ex plus ex '
@@ -69,7 +78,6 @@ def toks(src):
         if not tok: break
         print(tok)
 
-## @brief ast parsing
+## @brief evaluate script
 ## @param[in] src source code
-def ast(src):
-    return parser.parse(src, tracking=True)
+def eval(src): parser.parse(src)
