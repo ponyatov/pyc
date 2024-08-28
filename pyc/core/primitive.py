@@ -43,6 +43,7 @@ class Float(Num):
             case float(V): super().__init__(V)
             case str(V): super().__init__(float(V))
             case _: raise TypeError(type(V))
+
     ## @name operator
     def __pos__(self): return self
     def __neg__(self): return Float(-self.value)
@@ -114,7 +115,7 @@ class Int(Num):
             case _: raise TypeError(o)
 
     ## @brief `/`
-    def __div__(self, o):
+    def __truediv__(self, o):
         match o:
             case Int(): return Int(self.value / o.value)
             case Float(): return Float(self.value / o.value)
