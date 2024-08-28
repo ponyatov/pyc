@@ -43,6 +43,34 @@ class Float(Num):
     def __pos__(self): return self
     def __neg__(self): return Float(-self.value)
 
+    ## @brief `+`
+    def __add__(self, o):
+        match o:
+            case Int(): return Float(self.value + o.value)
+            case Float(): return Float(self.value + o.value)
+            case _: raise TypeError(o)
+
+    ## @brief `-`
+    def __sub__(self, o):
+        match o:
+            case Int(): return Float(self.value - o.value)
+            case Float(): return Float(self.value - o.value)
+            case _: raise TypeError(o)
+
+    ## @brief `*`
+    def __mul__(self, o):
+        match o:
+            case Int(): return Float(self.value * o.value)
+            case Float(): return Float(self.value * o.value)
+            case _: raise TypeError(o)
+
+    ## @brief `/`
+    def __truediv__(self, o):
+        match o:
+            case Int(): return Float(self.value / o.value)
+            case Float(): return Float(self.value / o.value)
+            case _: raise TypeError(o)
+
 ## @brief integer
 ## @ingroup primitive
 class Int(Num):
