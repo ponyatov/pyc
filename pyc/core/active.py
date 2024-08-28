@@ -35,3 +35,14 @@ class Op(Active):
                     case [a, b]: return a.eval() / b.eval()
                     case _: raise NotImplementedError(self)
             case _: raise NotImplementedError(self)
+
+## @brief VM command
+class Cmd(Active): pass
+
+## @brief environment
+class Env(Active): pass
+
+## @brief global environment
+Env.glob = Env('global')
+Env.glob['nop'] = Cmd('nop')
+Env.glob['halt'] = Cmd('halt')

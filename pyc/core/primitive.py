@@ -3,6 +3,7 @@
 
 from core import Object
 from core.container import Tree
+from core.active import Env
 
 ## @defgroup primitive primitive
 ## @brief primitive/scalar element
@@ -20,7 +21,8 @@ class Nil(Primitive):
 
 ## @brief symbol
 ## @ingroup primitive
-class Sym(Primitive): pass
+class Sym(Primitive):
+    def eval(self, env=Env.glob): return env[self.val()]
 
 ## @brief string
 ## @ingroup primitive

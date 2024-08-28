@@ -6,8 +6,7 @@ import pytest, sys
 from pathlib import Path
 sys.path.append(str(Path(f"{__file__}").parent.parent))
 
-from core import Object
-from core.primitive import Int
+from core.primitive import Int, Sym
 from core.active import Op
 
 ## @defgroup test_int int
@@ -36,3 +35,7 @@ def test_op():
     ast = add // a // b
     assert ast.test("\n<op:+>\n\t<int:123>\n\t<int:456>")
     assert ast.eval().test("\n<int:579>")
+
+def test_cmd_set():
+    assert Sym('nop').eval().test('\n<cmd:nop>')
+    assert Sym('halt').eval().test('\n<cmd:halt>')

@@ -13,9 +13,16 @@ class Object:
     ## @param[in] V initial `value`
     def __init__(self, V=''):
         ## @brief scalar value
-        self.value = V
-        ## @brief nested elements
+        match V:
+            case str(V): self.value = V
+            case int(V): self.value = V
+            case float(V): self.value = V
+            case Object(V): raise SyntaxError(V)
+            case _: raise TypeError(V, type(V))
+        ## @brief ordered vector = nested elements
         self.nest = []
+        ## @brief associative array = map
+        self.slot = {}
 
     ## @name unit test
 
@@ -36,6 +43,14 @@ class Object:
     def __getitem__(self, idx):
         match idx:
             case int(idx): return self.nest[idx]
+            case str(udx): return self.slot[idx]
+            case _: raise TypeError(idx)
+
+    ## @brief `o[i] = some` operation
+    def __setitem__(self, idx, o):
+        match idx:
+            case int(idx): self.nest[idx] = o
+            case str(idx): self.slot[idx] = o
             case _: raise TypeError(idx)
 
     ## @brief // push operator
