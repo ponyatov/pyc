@@ -14,6 +14,10 @@ class Primitive(Object):
     ## @brief most @ref primitive s return themself
     def eval(self): return self
 
+## @brief `nil` object
+class Nil(Primitive):
+    def __init__(self): super().__init__('')
+
 ## @brief symbol
 ## @ingroup primitive
 class Sym(Primitive): pass

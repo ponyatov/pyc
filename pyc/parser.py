@@ -7,6 +7,7 @@
 
 from lexer import tokens, lexer
 from core.meta import Module
+from core.primitive import Nil
 
 import ply.yacc as yacc
 
@@ -16,15 +17,24 @@ precedence = (
     ('right', 'pfx')
 )
 
+# def p_syntax_none(p):
+#     ' syntax : '
+#     p_ast = []
+# def p_syntax_nl(p):
+#     ' syntax : syntax nl '
+#     p_ast = []
+# def p_syntax_recur(p):
+#     ' syntax : syntax ex '
+#     if p[2]: print(p[2].eval())
 def p_syntax_none(p):
     ' syntax : '
-    p_ast = []
+    p[0] = Nil()
 def p_syntax_nl(p):
     ' syntax : syntax nl '
-    p_ast = []
-def p_syntax_recur(p):
-    ' syntax : syntax ex '
-    if p[2]: print(p[2].eval())
+    pass
+def p_syntax_ex(p):
+    ' syntax : ex '
+    p[0] = p[1]
 
 def p_ex_parens(p):
     ' ex : lp ex rp '
@@ -77,6 +87,10 @@ def toks(src):
         if not tok: break
         print(tok)
 
+## @brief parse source code into AST
+## @param[in] src source code
+def ast(src): return parser.parse(src)
+
 ## @brief evaluate script
 ## @param[in] src source code
-def eval(src): parser.parse(src)
+def eval(src): return ast(src).eval()

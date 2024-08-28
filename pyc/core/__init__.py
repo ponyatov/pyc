@@ -22,7 +22,10 @@ class Object:
     ## @brief dump self for unit test, and compare with `mustbe`
     ## @param[in] mustbe full text @ref dump padded with `\n` and `\t`s
     def test(self, mustbe=''):
-        return self.dump(test=True) == mustbe
+        ret = self.dump(test=True)
+        match ret:
+            case str(s) if s == mustbe: return True
+            case _: raise AssertionError(ret)
 
     ## @name operators
 

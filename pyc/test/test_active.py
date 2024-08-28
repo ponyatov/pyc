@@ -11,7 +11,7 @@ from core.primitive import Int
 from core.active import Op
 
 ## @defgroup test_int int
-## @brief @ref core.primitive.Int
+## @brief @ref Int
 ## @ingroup test
 
 ## @ingroup test_int
