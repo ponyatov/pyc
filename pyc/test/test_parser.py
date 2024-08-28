@@ -10,9 +10,13 @@ def test_ast_none():
 
 def test_ast_int():
     assert parser.ast('01230').test('\n<int:1230>')
+def test_ast_sint():
+    assert parser.ast('-01230').test('\n<op:->\n\t<int:1230>')
 
 def test_ast_float_point():
     assert parser.ast('012.30').test('\n<float:12.3>')
+def test_ast_sfloat_point():
+    assert parser.ast('+012.30').test('\n<op:+>\n\t<float:12.3>')
 
 def test_ast_float_exp():
     assert parser.ast('01.2e-3').test('\n<float:0.0012>')
