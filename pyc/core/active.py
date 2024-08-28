@@ -37,12 +37,15 @@ class Op(Active):
             case _: raise NotImplementedError(self)
 
 ## @brief VM command
+## @ingroup active
 class Cmd(Active): pass
 
-## @brief environment
+## @brief environment with static @ref glob
+## @ingroup active
 class Env(Active): pass
 
-## @brief global environment
+## @brief global environment @ @ref Env
+## @ingroup active
 Env.glob = Env('global')
 Env.glob['nop'] = Cmd('nop')
 Env.glob['halt'] = Cmd('halt')

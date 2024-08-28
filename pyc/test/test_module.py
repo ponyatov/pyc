@@ -1,3 +1,9 @@
+## @file
+## @brief modules
+
+## @defgroup test_module module
+## @ingroup test
+
 import pytest, sys
 
 from pathlib import Path

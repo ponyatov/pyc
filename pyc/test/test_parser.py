@@ -1,3 +1,9 @@
+## @file
+## @brief parser
+
+## @defgroup test_parser parser
+## @ingroup test
+
 import pytest, sys
 
 from pathlib import Path
