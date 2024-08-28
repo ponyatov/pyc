@@ -20,3 +20,5 @@ def test_ast_sfloat_point():
 
 def test_ast_float_exp():
     assert parser.ast('01.2e-3').test('\n<float:0.0012>')
+def test_ast_int_exp():
+    assert parser.ast('+2E-3').test('\n<op:+>\n\t<float:0.002>')
