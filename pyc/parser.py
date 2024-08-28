@@ -19,14 +19,13 @@ precedence = (
 def p_syntax_none(p):
     ' syntax : '
     p_ast = []
+def p_syntax_nl(p):
+    ' syntax : syntax nl '
+    p_ast = []
 def p_syntax_recur(p):
     ' syntax : syntax ex '
     # if p[2]: print(p[2])
     if p[2]: print(p[2].eval())
-
-def p_ex_nl(p):
-    ' ex : nl '
-    pass
 
 def p_ex_parens(p):
     ' ex : lp ex rp '
@@ -57,6 +56,7 @@ def p_ex_add(p):
     p[0] = p[2] // p[1] // p[3]
 def p_ex_sub(p):
     ' ex : ex minus ex '
+    print(p[1], p[3])
     p[0] = p[2] // p[1] // p[3]
 def p_ex_mul(p):
     ' ex : ex star ex '
