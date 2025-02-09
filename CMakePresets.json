@@ -1,0 +1,73 @@
+{
+    "version": 6,
+    "buildPresets": [
+        {
+            "name"           :   "pillF103",
+            "configurePreset":   "pillF103",
+            "targets"        :  ["all","install"]
+        },
+        {
+            "name"           :   "glibc",
+            "configurePreset":   "glibc",
+            "targets"        :  ["all","install"]
+        }
+    ],
+    "configurePresets": [
+        {
+            "name"     : "common",
+            "hidden"   :  true,
+            "binaryDir": "${sourceDir}/tmp/${presetName}",
+            "generator": "Unix Makefiles",
+            "cacheVariables": {
+                "APP"                     : "${workspaceFolderBasename}",
+                "CMAKE_INSTALL_PREFIX"    : "${sourceDir}/bin",
+                "CMAKE_MODULE_PATH"       : "${sourceDir}/cmake",
+                "CMAKE_COLOR_DIAGNOSTICS" : false,
+                "CMAKE_BUILD_TYPE"        : "Debug",
+                "CMAKE_VERBOSE_MAKEFILE"  : true
+            }
+        },
+        {
+            "name"          :  "cortexM",
+            "hidden"        :   true,
+            "inherits"      :  "common",
+            "toolchainFile" :  "${sourceDir}/cmake/arm-none-eabi.cmake",
+            "cacheVariables": {"OS":"bare","CMAKE_EXECUTABLE_SUFFIX":".elf"}
+        },
+        {
+            "name"          :  "cortexM3",
+            "hidden"        :   true,
+            "inherits"      :  "cortexM",
+            "cacheVariables": {"ARCH":"cortexM3"}
+        },
+        {
+            "name"          : "pillF103",
+            "inherits"      : "cortexM3",
+            "cacheVariables": {
+                "HW" :"pillF103",
+                "CPU":"stm32f103c8t", "SERIES": "STM32F1"
+            }
+        },
+        {
+            "name"          : "pc",
+            "inherits"      : "common",
+            "hidden"        : true,
+            "cacheVariables": {
+                "HW":"pc", "CPU":"i5", "ARCH":"x86_64"
+            }
+        },
+        {
+            "name"          : "linux",
+            "inherits"      : "pc",
+            "hidden"        : true,
+            "cacheVariables": {"OS":"linux"}
+        },
+        {
+            "name"         : "glibc",
+            "inherits"     : "linux",
+            "displayName"  : "x86_64-linux-gnu",
+            "description"  : "native host",
+            "toolchainFile": "${sourceDir}/cmake/x86_64-linux-gnu.cmake"
+        }
+   ]
+}

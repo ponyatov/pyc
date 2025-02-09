@@ -1,0 +1,48 @@
+{
+    "recommendations": [
+        "stkb.rewrap",
+        "ryuta46.multi-command",
+        "tabnine.tabnine-vscode",
+        "ms-vscode.makefile-tools",
+        "IBM.output-colorizer",
+        // Linux
+        "ms-vscode-remote.remote-ssh",
+        "ms-azuretools.vscode-docker",
+        "coolbear.systemd-unit-file",
+        // formatters
+        "xaver.clang-format",
+        "foxundermoon.shell-format",
+        "esbenp.prettier-vscode",
+        // misc
+        "usernamehw.errorlens",
+        // "hbenl.vscode-test-explorer",
+        // Web
+        "esbenp.prettier-vscode",
+        "mechatroner.rainbow-csv",
+        // C++
+        "ms-vscode.cpptools",
+        "jeff-hykin.better-cpp-syntax",
+        "ms-vscode.cmake-tools",
+        "twxs.cmake",
+        // parser
+        "daohong-emilio.yash",
+        "rreverser.ragel",
+        // embedded
+        "ms-vscode.hexeditor",
+        "zixuanwang.linkerscript",
+        "dan-c-underwood.arm",
+        // ESP32
+        // "espressif.esp-idf-extension",
+        // Python
+        "ms-python.python",
+        "ms-python.autopep8",
+        // Rust
+        // "rust-lang.rust-analyzer",
+        // "tamasfe.even-better-toml",
+        // F#
+        "ionide.ionide-fsharp",
+        "tintoy.msbuild-project-tools",
+        // "ms-dotnettools.csdevkit",
+        "mnxn.fsharp-fsl-fsy",
+    ]
+}
