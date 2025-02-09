@@ -8,8 +8,15 @@ EMAIL = 'dponyatov@gmail.com'
 LICENSE = 'MIT'
 
 import datetime as dt
+import os
 
 YEAR = dt.date.today().year
+
+def dirs(**kv):
+    for i in ['.vscode', 'bin', 'doc', 'lib', 'inc', 'src', 'tmp', 'ref', 'hw', 'cpu', 'arch', 'os', 'meta']:
+        try: os.mkdir(i)
+        except FileExistsError: pass
+        open(f'{i}/.gitignore', 'a').close()
 
 def readme(**kv):
     with open('README.md', 'w') as f:
@@ -34,5 +41,5 @@ python3 python3-venv python3-ply''', file=f)
 
 ## @brief regenerate file tree structure
 def genfiles():
-    for component in [readme, apt]: component()
+    for component in [dirs, readme, apt]: component()
 genfiles()
