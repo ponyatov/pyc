@@ -1,5 +1,5 @@
-## @defgroup meta meta
-## @{
+## @defgroup pyc pyc
+## @brief metacompiler
 
 MODULE = 'pyc'
 ABOUT = 'Python/F compiler'
@@ -11,6 +11,60 @@ import datetime as dt
 import os as _os
 
 YEAR = dt.date.today().year
+
+## @defgroup object object
+## @ingroup pyc
+## @brief root @ref Object : common for all types
+
+## @brief root @ref Object : common for all types
+## @ingroup object
+class Object: pass
+
+## @defgroup prim prim
+## @ingroup object
+## @brief primitive
+
+## @brief primitive
+## @ingroup prim
+class Prim(Object): pass
+
+## @brief source code / string
+## @ingroup prim
+class S(Prim): pass
+
+
+## @defgroup cont cont
+## @brief container
+## @ingroup object
+
+## @brief container
+## @ingroup cont
+class Cont(Object): pass
+
+## @defgroup meta meta
+## @brief @ref metaprog
+## @ingroup object
+
+## @ingroup meta
+class Meta(Object): pass
+
+## @defgroup io io
+## @brief I/O
+## @ingroup object
+
+## @ingroup io
+class IO(Object):
+    def __init__(self, name):
+        self.name = name
+
+## @ingroup io
+class Dir(IO):
+    def sync(self):
+        try: _os.mkdir(self.path)
+        except FileExistsError: pass
+## @ingroup io
+class File(IO):
+    def sync(self): self.path.sync()
 
 def dirs(**kv):
     d = ['.', '.vscode', 'bin', 'doc', 'lib',
@@ -92,7 +146,7 @@ python3 python3-venv python3-ply''', file=f)
         if mingw64:
             print('''g++-mingw-w64-x86-64 gdb-mingw-w64 wine64 wine64-tools''', file=f)
 
-## @brief regenerate file tree structure
-def genfiles():
-    for component in [dirs, giti, cross, readme, apt]: component()
-genfiles()
+# ## @brief regenerate file tree structure
+# def genfiles():
+#     for component in [dirs, giti, cross, readme, apt]: component()
+# genfiles()

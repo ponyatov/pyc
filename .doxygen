@@ -1,5 +1,5 @@
 PROJECT_NAME           = "pyc"
-PROJECT_BRIEF          = "as soon as possible"
+PROJECT_BRIEF          = "Python/F compiler"
 PROJECT_LOGO           = doc/logo.png
 OUTPUT_DIRECTORY       = doc
 HTML_OUTPUT            = html
