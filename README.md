@@ -1,7 +1,7 @@
-# `pyc`
+# ![](doc/logo.png) `pyc`
 ## Python/F compiler
 
-(c) Dmitry Ponyatov <<dponyatov@gmail.com>> 2025 MIT
+(c) Dmitry Ponyatov <<dponyatov@gmail.com>> 2025
 
 -  github: https://github.com/ponyatov/pyc
 - gitflic: https://gitflic.ru/project/dponyatov/pyc
