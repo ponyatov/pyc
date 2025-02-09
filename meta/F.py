@@ -16,4 +16,12 @@ def readme():
 -  github: https://github.com/ponyatov/{MODULE}
 - gitflic: https://gitflic.ru/project/dponyatov/{MODULE}''', file=f)
 
-print(readme())
+def apt():
+    with open('apt.Debian', 'w') as f:
+        print('''git make curl
+code meld doxygen clang-format
+cmake g++ gdb flex bison libreadline-dev ragel
+python3 python-ply''', file=f)
+
+def genfiles(): readme(); apt()
+genfiles()
