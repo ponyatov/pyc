@@ -8,15 +8,68 @@ EMAIL = 'dponyatov@gmail.com'
 LICENSE = 'MIT'
 
 import datetime as dt
-import os
+import os as _os
 
 YEAR = dt.date.today().year
 
 def dirs(**kv):
-    for i in ['.vscode', 'bin', 'doc', 'lib', 'inc', 'src', 'tmp', 'ref', 'hw', 'cpu', 'arch', 'os', 'meta']:
-        try: os.mkdir(i)
+    d = ['.', '.vscode', 'bin', 'doc', 'lib',
+         'inc', 'src', 'tmp', 'ref', 'meta']
+    f = map(lambda i: f'{i}/.gitignore', d)
+    for i in d:
+        try: _os.mkdir(i)
         except FileExistsError: pass
-        open(f'{i}/.gitignore', 'a').close()
+    map(lambda i: open(i, 'a').close(), f)
+
+def giti(**kv):
+    with open('.gitignore', 'w') as i:
+        print('''*~\n*.swp\n*.log\n!.gitignore''', file=i)
+    with open('.gitattributes', 'w') as j:
+        print('* text=auto eol=lf', file=j)
+        print('\n# All source code in UNIX format', file=j)
+        for e in ['c', 'cpp', 'h', 'hpp', 's', 'ld']:
+            print(f'*.{e:3} text diff=cpp', file=j)
+        print('\n# Binary files', file=j)
+        for b in ['bin', 'elf', 'dfu', 'png', 'pdf', 'doc', 'docx']:
+            print(f'*.{b:4} binary', file=j)
+        print('\n# Linux', file=j)
+        for l in ['sh', 'rc', 'service']:
+            print(f'*.{l:7} text eol=lf', file=j)
+        print('\n# Windows/MSYS', file=j)
+        for w in ['bat', 'ps*']:
+            print(f'*.{w} text eol=crlf', file=j)
+
+def hw(**kv):
+    d = ['hw', 'hw/inc', 'hw/src']
+    try:
+        for j in d: _os.mkdir(j); open(f'{j}/.gitignore', 'a')
+    except FileExistsError: pass
+
+def cpu(**kv):
+    d = 'cpu'
+    try:
+        _os.mkdir(d)
+        for s in ['inc', 'src']:
+            _os.mkdir(f'{d}/{s}')
+    except FileExistsError: pass
+
+def arch(**kv):
+    d = 'arch'
+    try:
+        _os.mkdir(d)
+        for s in ['inc', 'src']:
+            _os.mkdir(f'{d}/{s}')
+    except FileExistsError: pass
+
+def os(**kv):
+    d = 'os'
+    try:
+        _os.mkdir(d)
+        for s in ['inc', 'src']:
+            _os.mkdir(f'{d}/{s}')
+    except FileExistsError: pass
+def cross(**kv):
+    hw(**kv); cpu(**kv); arch(**kv); os(**kv)
 
 def readme(**kv):
     with open('README.md', 'w') as f:
@@ -41,5 +94,5 @@ python3 python3-venv python3-ply''', file=f)
 
 ## @brief regenerate file tree structure
 def genfiles():
-    for component in [dirs, readme, apt]: component()
+    for component in [dirs, giti, cross, readme, apt]: component()
 genfiles()
