@@ -1,0 +1,12 @@
+{
+    "recommendations": [
+        "TabNine.tabnine-vscode",
+        "ms-vscode.makefile-tools",
+        // JS
+        "esbenp.prettier-vscode",
+        "xaver.clang-format",
+        // Python
+        "ms-python.python",
+        "ms-python.autopep8"
+    ]
+}
