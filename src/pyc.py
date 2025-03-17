@@ -6,8 +6,7 @@ class Object: pass
 
 class S(Object):
     def __init__(self, pfx=None, sfx=None):
-        self.pfx = pfx; self.sfx = sfx
-        self.nest = []
+        self.pfx = pfx; self.sfx = sfx; self.nest = []
 
     def gen(self, depth=0):
         def tab(depth): return ' ' * 4 * depth
@@ -113,7 +112,7 @@ cmk = CMakeLists()
 cpr = CMakePresets()
 
 class Cross(Object):
-    def __init__(self, name, cdef=[], copt=[]):
+    def __init__(self, name, cdef=[], copt=[], clink=[], **kw):
         self.name = name
         self.cname = self.__class__.__name__.lower()
         # cross/hw
@@ -143,13 +142,20 @@ class Cross(Object):
         self.mk = self.dir / File(f'{name}.mk')
         # cross/hw/cross.cmake
         self.cmake = self.dir / File(f'{name}.cmake')
+        self.cmake.kw = S('', '')
         self.cmake.add_compile_options = S('add_compile_options(', ')')
         self.cmake.add_compile_definitions = S('add_compile_definitions(', ')')
-        self.cmake / self.cmake.add_compile_options / \
-            '' / self.cmake.add_compile_definitions\
-            # cmake
+        self.cmake.add_link_options = S('add_link_options(', ')')
+        self.cmake / self.cmake.kw / self.cmake.add_compile_options / \
+            '' / self.cmake.add_compile_definitions / \
+            '' / self.cmake.add_link_options
+        # cmake
+        try:
+            for k, v in kw['kw'].items(): self.cmake.kw / f'set({k} {v})'
+        except KeyError: pass
         for i in copt: self.cmake.add_compile_options / i
         for j in cdef: self.cmake.add_compile_definitions / j
+        for k in clink: self.cmake.add_link_options / k
 
     def sync(self):
         self.__class__.inc.sync(); self.__class__.src.sync()
@@ -186,8 +192,8 @@ class OS(Cross):
          )
 
 class ARCH(Cross):
-    def __init__(self, name, os, cdef=[], copt=[]):
-        super().__init__(name, cdef=cdef, copt=copt)
+    def __init__(self, name, os, cdef=[], copt=[], clink=[], **kw):
+        super().__init__(name, cdef=cdef, copt=copt, clink=clink, kw=kw)
         ingroup = 'cortexM' if re.match(r'cortexM\d+', name) else 'arch'
         (self.inc
          / f'#pragma once'
@@ -195,8 +201,9 @@ class ARCH(Cross):
          / f'/// @ingroup {ingroup}'
          / '/// @{' / '/// @}'
          )
-        if re.match(r'^cortexM', name):
+        if re.match(r'^cortexM\d+', name):
             self.mk / 'include arch/cortexM/cortexM.mk'
+            self.cmake.nest.insert(0, S('include(arch/cortexM/cortexM.cmake)'))
 
 
 class HW(Cross):
@@ -230,7 +237,9 @@ x86_64 = ARCH('x86_64', os=linux); x86_64.sync()
 cortexM = ARCH('cortexM', os=bare,
                cdef=['USE_HAL_DRIVER'], copt=['-mthumb']); cortexM.sync()
 cortexM4 = ARCH('cortexM4', os=bare,
-                cdef=['USE_HAL_DRIVER'], copt=['-mthumb']); cortexM4.sync()
+                copt=['${MCPU} ${MFPU}'], clink=['${MCPU} ${MFPU}'],
+                MCPU='-march=armv7e-m   -mcpu=cortex-m4',
+                FCPU='-mfpu=fpv4-sp-d16 -mfloat-abi=hard'); cortexM4.sync()
 cortexM4.mk / 'include arch/cortexM/cortexM.mk'
 
 stm32l496agi = CPU('stm32l496agi', arch=cortexM4,
