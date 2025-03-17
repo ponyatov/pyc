@@ -1,1 +1,19 @@
-
+{
+    "version": 6,
+    "configurePresets": [
+        {
+            "name"           : "common",
+            "hidden"         :  true,
+            "binaryDir"      : "${sourceDir}/tmp/${presetName}",
+            "generator"      : "Unix Makefiles",
+            "cacheVariables" : {
+            }
+        },
+        {
+            "name"           : "linux",
+            "inherits"       : "common",
+            "cacheVariables" : {
+            }
+        }
+    ]
+}
