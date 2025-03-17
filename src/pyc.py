@@ -26,23 +26,25 @@ class S(Object):
         return self
 
 class IO(Object):
-    def __init__(self, path):
-        self.path = path
+    def __init__(self, name):
+        self.path = self.name = name
+        self.nest = []
 
     def __truediv__(self, o):
         o.path = f'{self.path}/{o.path}'
         return o
+
+    def __str__(self):
+        return self.name
 
 class Dir(IO):
 
     def sync(self):
         try: os.mkdir(self.path)
         except FileExistsError: pass
+        open(f'{self.path}/.gitignore', 'a').close()
 
 class File(IO):
-    def __init__(self, path):
-        super().__init__(path)
-        self.nest = []
 
     def sync(self):
         with open(self.path, 'w') as src:
@@ -112,18 +114,18 @@ cpr = CMakePresets()
 class Cross(Object):
     def __init__(self, name):
         self.name = name
-        cname = self.__class__.__name__.lower()
+        self.cname = self.__class__.__name__.lower()
         # cross/hw
-        self.__class__.dir = Dir(cname)
+        self.__class__.dir = Dir(self.cname)
         self.__class__.dir.sync()
         # cross/hw/inc
         self.__class__.dinc = self.__class__.dir / Dir('inc')
         self.__class__.dinc.sync()
-        self.__class__.inc = self.__class__.dinc / File(f'{cname}.hpp')
+        self.__class__.inc = self.__class__.dinc / File(f'{self.cname}.hpp')
         # cross/hw/src
         self.__class__.dsrc = self.__class__.dir / Dir('src')
         self.__class__.dsrc.sync()
-        self.__class__.src = self.__class__.dsrc / File(f'{cname}.cpp')
+        self.__class__.src = self.__class__.dsrc / File(f'{self.cname}.cpp')
         # cross/hw/cross
         self.dir = self.__class__.dir / Dir(name)
         self.dir.sync()
@@ -131,15 +133,23 @@ class Cross(Object):
         self.inc = self.dinc / File(f'{name}.hpp')
         self.dsrc = self.dir / Dir('src'); self.dsrc.sync()
         self.src = self.dsrc / File(f'{name}.cpp')
+        self.src / f'#include "{self.inc}"'
         # cross/hw/cross.mk
         self.mk = self.dir / File(f'{name}.mk')
         # cross/hw/cross.cmake
         self.cmake = self.dir / File(f'{name}.cmake')
+        self.cmake.add_compile_options = S('add_compile_options(', ')')
+        self.cmake.add_compile_definitions = S('add_compile_definitions(', ')')
+        self.cmake / self.cmake.add_compile_options / \
+            '' / self.cmake.add_compile_definitions
 
     def sync(self):
         self.__class__.inc.sync()
         self.inc.sync(); self.src.sync()
         self.mk.sync(); self.cmake.sync()
+
+    def __str__(self):
+        return self.name
 
 class CPU(Cross):
     def sync(self):
@@ -153,9 +163,17 @@ class HW(Cross):
         self.ioc = self.dir / File(f'{name}.ioc')
         self.gdb = self.dir / File(f'{name}.gdb')
         self.ocd = self.dir / File(f'{name}.ocd')
+        (self.inc
+         / f'#pragma once'
+         / f'/// @defgroup {name} {name}'
+         / f'/// @ingroup {self.cname}'
+         / f'/// @brief `cpu: ` @ref {cpu}'
+         / '/// @{' / '/// @}'
+         )
+        self.mk / f'CPU = {cpu}'
 
     def sync(self):
         super().sync()
-        self.gdb.sync(); self.ocd.sync()
+        # self.gdb.sync(); self.ocd.sync()
 
 l496disco = HW('l496disco', cpu=stm32l496agi); l496disco.sync()
