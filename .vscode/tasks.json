@@ -2,14 +2,25 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "python: run",
-            "type": "shell",
-            "command": "python3 src/${workspaceFolderBasename}.py lib/${workspaceFolderBasename}.ini",
-            "problemMatcher": [],
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            }
+            "label"          : "openocd: firmware",
+            "type"           : "shell",
+            "command"        : "make fw",
+            "dependsOn"      : "cmaked: build",
+            "problemMatcher" : []
+        },
+        {
+            "label"          : "openocd: debug",
+            "type"           : "shell",
+            "command"        : "make ocd",
+            "dependsOn"      : "cmake: build",
+            "problemMatcher" : []
+        },
+        {
+            "label"          : "python: run",
+            "type"           : "shell",
+            "command"        : "python3 src/${workspaceFolderBasename}.py lib/${workspaceFolderBasename}.ini",
+            "problemMatcher" : [],
+            "group"          : {"kind": "build","isDefault": true}
         }
     ]
 }

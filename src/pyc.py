@@ -201,7 +201,15 @@ class ARCH(Cross):
          / f'/// @ingroup {ingroup}'
          / '/// @{' / '/// @}'
          )
-        if re.match(r'^cortexM\d+', name):
+        if re.match(r'^cortexM$', name):
+            (self.mk
+             / 'OS     = bare'
+             / 'TARGET = arm-none-eabi'
+             / 'EXE    = .elf'
+             / 'APT   += gcc-$(TARGET)   gdb-multiarch'
+             / 'APT   += qemu-system-arm newlib-source'
+             / 'APT   += stlink-tools dfu-util dos2unix')
+        if re.match(r'^cortexM\d+$', name):
             self.mk / 'include arch/cortexM/cortexM.mk'
             self.cmake.nest.insert(0, S('include(arch/cortexM/cortexM.cmake)'))
 
