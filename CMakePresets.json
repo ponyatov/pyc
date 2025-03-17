@@ -1,5 +1,17 @@
 {
     "version": 6,
+    "buildPresets": [
+        {
+            "name"            :  "l496disco",
+            "configurePreset" :  "l496disco",
+            "targets"         : ["all","install"]
+        },
+        {
+            "name"            :  "linux",
+            "configurePreset" :  "linux",
+            "targets"         : ["all","install"]
+        }
+    ],
     "configurePresets": [
         {
             "name"           : "common",
@@ -10,9 +22,34 @@
             }
         },
         {
+            "name"           : "cortexM",
+            "inherits"       : "common",
+            "hidden"         :  true,
+            "cacheVariables" : {
+                "OS":"bare"
+            }
+        },
+        {
+            "name"           : "cortexM4",
+            "inherits"       : "cortexM",
+            "hidden"         :  true,
+            "cacheVariables" : {
+                "ARCH":"cortexM4"
+            }
+        },
+        {
+            "name"           : "l496disco",
+            "inherits"       : "cortexM4",
+            "cacheVariables" : {
+                "HW" :"l496disco",
+                "CPU":"stm32l496agi", "SERIES": "STM32L4"
+            }
+        },
+        {
             "name"           : "linux",
             "inherits"       : "common",
             "cacheVariables" : {
+                "OS":"linux"
             }
         }
     ]
