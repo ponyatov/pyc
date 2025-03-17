@@ -65,6 +65,8 @@ void Error_Handler(void);
 #define USB_DP_GPIO_Port GPIOA
 #define USB_DM_Pin GPIO_PIN_11
 #define USB_DM_GPIO_Port GPIOA
+#define USB_VBUS_Pin GPIO_PIN_9
+#define USB_VBUS_GPIO_Port GPIOA
 
 /* USER CODE BEGIN Private defines */
 

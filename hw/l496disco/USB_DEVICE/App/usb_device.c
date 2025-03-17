@@ -77,10 +77,12 @@ void MX_USB_DEVICE_Init(void)
   {
     Error_Handler();
   }
+  HAL_Delay(1000);
   if (USBD_CDC_RegisterInterface(&hUsbDeviceFS, &USBD_Interface_fops_FS) != USBD_OK)
   {
     Error_Handler();
   }
+  HAL_Delay(1000);
   if (USBD_Start(&hUsbDeviceFS) != USBD_OK)
   {
     Error_Handler();
@@ -97,4 +99,3 @@ void MX_USB_DEVICE_Init(void)
 /**
   * @}
   */
-
