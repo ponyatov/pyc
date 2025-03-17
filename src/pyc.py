@@ -4,6 +4,13 @@ MODULE = os.getcwd().split('/')[-1]
 
 class Object: pass
 
+class S(Object):
+    def __init__(self, pfx=None, sfx=None):
+        self.pfx = pfx; self.sfx = sfx
+    def gen(self):
+        ret = ''
+        return ret
+
 class IO(Object):
     def __init__(self, path):
         self.path = path
@@ -23,11 +30,29 @@ bin = Dir('bin'); bin.sync()
 tmp = Dir('tmp'); tmp.sync()
 
 class File(IO):
+    def __init__(self, path):
+        super().__init__(path)
+        self.nest = []
+
     def sync(self):
-        with open(self.path, 'w') as src: pass
+        with open(self.path, 'w') as src:
+            for i in self.nest:
+                print(i.gen(), file=src)
+
+    def __truediv__(self, o):
+        assert type(o) == S
+        self.nest.append(o)
 
 hpp = inc / f'{MODULE}.hpp'; hpp.sync()
 cpp = src / f'{MODULE}.cpp'; cpp.sync()
 
-cmk = File('CMakeLists.txt'); cmk.sync()
-cpr = File('CMakePresets.json'); cpr.sync()
+class CMakeLists(File):
+    def __init__(self): super().__init__('CMakeLists.txt')
+
+class CMakePresets(File):
+    def __init__(self):
+        super().__init__('CMakePresets.json')
+        self / S('{', '}')
+
+cmk = CMakeLists(); cmk.sync()
+cpr = CMakePresets(); cpr.sync()
