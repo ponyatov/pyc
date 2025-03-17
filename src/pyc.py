@@ -112,13 +112,28 @@ cpr = CMakePresets(); cpr.sync()
 class Cross(Object):
     def __init__(self, name):
         self.name = name
-        self.__class__.dir = Dir(self.__class__.__name__.lower())
+        cname = self.__class__.__name__.lower()
+        self.__class__.dir = Dir(cname)
         self.__class__.dir.sync()
+        self.__class__.dinc = self.__class__.dir / Dir('inc')
+        self.__class__.dinc.sync()
+        self.__class__.inc = self.__class__.dinc / File(f'{cname}.hpp')
+
+        (self.__class__.dir / Dir('src')).sync()
         self.dir = self.__class__.dir / Dir(name)
+        self.dir.sync()
+        self.dinc = self.dir / Dir('inc');self.dinc.sync()
+        self.inc = self.dinc / File(f'{name}.hpp')
+        self.dsrc = self.dir / Dir('src');self.dsrc.sync()
+        self.src = self.dsrc / File(f'{name}.cpp')
+
+    def sync(self):
+        self.__class__.inc.sync()
+        self.inc.sync(); self.src.sync()
 
 class CPU(Cross):
     def sync(self):
-        CPU.dir = Dir('cpu'); CPU.dir.sync()
+        super().sync()
 
 STM32L496AGI = CPU('STM32L496AGI'); STM32L496AGI.sync()
 
@@ -128,7 +143,7 @@ class HW(Cross):
         self.ioc = self.dir / File(f'{name}.ioc')
 
     def sync(self):
-        HW.dir.sync(); self.dir.sync()
-        self.ioc.sync()
+        super().sync()
+        # self.ioc.sync()
 
 l496disco = HW('l496disco', cpu=STM32L496AGI); l496disco.sync()
