@@ -185,9 +185,6 @@ class OS(Cross):
          / '/// @{' / '/// @}'
          )
 
-bare = OS('bare'); bare.sync()
-linux = OS('linux'); linux.sync()
-
 class ARCH(Cross):
     def __init__(self, name, os, cdef=[], copt=[]):
         super().__init__(name, cdef=cdef, copt=copt)
@@ -201,12 +198,6 @@ class ARCH(Cross):
         if re.match(r'^cortexM', name):
             self.mk / 'include arch/cortexM/cortexM.mk'
 
-x86_64 = ARCH('x86_64', os=linux); x86_64.sync()
-cortexM = ARCH('cortexM', os=bare,
-               cdef=['USE_HAL_DRIVER'], copt=['-mthumb']); cortexM.sync()
-cortexM4 = ARCH('cortexM4', os=bare,
-                cdef=['USE_HAL_DRIVER'], copt=['-mthumb']); cortexM4.sync()
-cortexM4.mk / 'include arch/cortexM/cortexM.mk'
 
 class HW(Cross):
     def __init__(self, name, cpu):
@@ -231,6 +222,16 @@ hw = Dir('hw'); hw.sync()
 cpu = Dir('cpu'); cpu.sync()
 arch = Dir('arch'); arch.sync()
 oz = Dir('os'); oz.sync()
+
+bare = OS('bare'); bare.sync()
+linux = OS('linux'); linux.sync()
+
+x86_64 = ARCH('x86_64', os=linux); x86_64.sync()
+cortexM = ARCH('cortexM', os=bare,
+               cdef=['USE_HAL_DRIVER'], copt=['-mthumb']); cortexM.sync()
+cortexM4 = ARCH('cortexM4', os=bare,
+                cdef=['USE_HAL_DRIVER'], copt=['-mthumb']); cortexM4.sync()
+cortexM4.mk / 'include arch/cortexM/cortexM.mk'
 
 stm32l496agi = CPU('stm32l496agi', arch=cortexM4,
                    cdef=['STM32L496xx']); stm32l496agi.sync()
