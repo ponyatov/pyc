@@ -170,8 +170,21 @@ class CPU(Cross):
     def sync(self):
         super().sync()
 
-class ARCH(Cross):
+class OS(Cross):
     def __init__(self, name):
+        super().__init__(name)
+        (self.inc
+         / f'#pragma once'
+         / f'/// @defgroup {name} {name}'
+         / f'/// @ingroup os'
+         / '/// @{' / '/// @}'
+         )
+
+bare = OS('bare'); bare.sync()
+linux = OS('linux'); linux.sync()
+
+class ARCH(Cross):
+    def __init__(self, name, os):
         super().__init__(name)
         ingroup = 'cortexM' if re.match(r'cortexM\d+', name) else 'arch'
         (self.inc
@@ -181,9 +194,9 @@ class ARCH(Cross):
          / '/// @{' / '/// @}'
          )
 
-x86_64 = ARCH('x86_64'); x86_64.sync()
-cortexM = ARCH('cortexM'); cortexM.sync()
-cortexM4 = ARCH('cortexM4'); cortexM4.sync()
+x86_64 = ARCH('x86_64', os=linux); x86_64.sync()
+cortexM = ARCH('cortexM', os=bare); cortexM.sync()
+cortexM4 = ARCH('cortexM4', os=bare); cortexM4.sync()
 cortexM4.mk / 'include arch/cortexM/cortexM.mk'
 
 class HW(Cross):
