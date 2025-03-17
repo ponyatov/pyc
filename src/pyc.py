@@ -38,11 +38,14 @@ class IO(Object):
         return self.name
 
 class Dir(IO):
+    def __init__(self, name):
+        super().__init__(name)
+        self.giti = File('.gitignore'); self / self.giti
 
     def sync(self):
         try: os.mkdir(self.path)
         except FileExistsError: pass
-        open(f'{self.path}/.gitignore', 'a').close()
+        # self.giti.sync()
 
 class File(IO):
 
@@ -60,10 +63,8 @@ class File(IO):
 
 inc = Dir('inc'); inc.sync()
 src = Dir('src'); src.sync()
-bin = Dir('bin'); bin.sync()
-tmp = Dir('tmp'); tmp.sync()
-((bin / File('.gitignore')) / '*').sync()
-((tmp / File('.gitignore')) / '*').sync()
+bin = Dir('bin'); bin.sync(); bin.giti / '*'
+tmp = Dir('tmp'); tmp.sync(); tmp.giti / '*'
 
 hpp = inc / File(f'{MODULE}.hpp'); hpp.sync()
 cpp = src / File(f'{MODULE}.cpp'); cpp.sync()
@@ -128,7 +129,6 @@ class Cross(Object):
         self.__class__.src = self.__class__.dsrc / File(f'{self.cname}.cpp')
         # cross/hw/cross
         self.dir = self.__class__.dir / Dir(name)
-        self.dir.sync()
         self.dinc = self.dir / Dir('inc'); self.dinc.sync()
         self.inc = self.dinc / File(f'{name}.hpp')
         self.dsrc = self.dir / Dir('src'); self.dsrc.sync()
@@ -144,7 +144,7 @@ class Cross(Object):
             '' / self.cmake.add_compile_definitions
 
     def sync(self):
-        self.__class__.inc.sync()
+        self.__class__.inc.sync(); self.__class__.src.sync()
         self.inc.sync(); self.src.sync()
         self.mk.sync(); self.cmake.sync()
 
@@ -154,8 +154,6 @@ class Cross(Object):
 class CPU(Cross):
     def sync(self):
         super().sync()
-
-stm32l496agi = CPU('stm32l496agi'); stm32l496agi.sync()
 
 class HW(Cross):
     def __init__(self, name, cpu):
@@ -176,4 +174,13 @@ class HW(Cross):
         super().sync()
         # self.gdb.sync(); self.ocd.sync()
 
+hw = Dir('hw'); hw.sync()
+cpu = Dir('cpu'); cpu.sync()
+arch = Dir('arch'); arch.sync()
+oz = Dir('os'); oz.sync()
+
+stm32l496agi = CPU('stm32l496agi'); stm32l496agi.sync()
 l496disco = HW('l496disco', cpu=stm32l496agi); l496disco.sync()
+
+i5 = CPU('i5'); i5.sync()
+pc = HW('pc', cpu=i5); pc.sync()
