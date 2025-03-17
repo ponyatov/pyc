@@ -157,7 +157,7 @@ class Cross(Object):
         return self.name
 
 class CPU(Cross):
-    def __init__(self, name, arch):
+    def __init__(self, name, arch, cpudef=None):
         super().__init__(name)
         (self.inc
          / f'#pragma once'
@@ -165,7 +165,8 @@ class CPU(Cross):
          / f'/// @ingroup {arch}'
          / '/// @{' / '/// @}'
          )
-        self.mk / f'CPU = {arch}'
+        self.mk / f'ARCH = {arch}'
+        if cpudef: self.cmake.add_compile_definitions / cpudef
 
     def sync(self):
         super().sync()
@@ -223,7 +224,8 @@ cpu = Dir('cpu'); cpu.sync()
 arch = Dir('arch'); arch.sync()
 oz = Dir('os'); oz.sync()
 
-stm32l496agi = CPU('stm32l496agi', arch=cortexM4); stm32l496agi.sync()
+stm32l496agi = CPU('stm32l496agi', arch=cortexM4,
+                   cpudef='STM32L496xx'); stm32l496agi.sync()
 l496disco = HW('l496disco', cpu=stm32l496agi); l496disco.sync()
 
 i5 = CPU('i5', arch=x86_64); i5.sync()
