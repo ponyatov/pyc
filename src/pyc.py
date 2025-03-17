@@ -113,7 +113,7 @@ cmk = CMakeLists()
 cpr = CMakePresets()
 
 class Cross(Object):
-    def __init__(self, name):
+    def __init__(self, name, cdef=[], copt=[]):
         self.name = name
         self.cname = self.__class__.__name__.lower()
         # cross/hw
@@ -146,19 +146,24 @@ class Cross(Object):
         self.cmake.add_compile_options = S('add_compile_options(', ')')
         self.cmake.add_compile_definitions = S('add_compile_definitions(', ')')
         self.cmake / self.cmake.add_compile_options / \
-            '' / self.cmake.add_compile_definitions
+            '' / self.cmake.add_compile_definitions\
+            # cmake
+        for i in copt: self.cmake.add_compile_options / i
+        for j in cdef: self.cmake.add_compile_definitions / j
 
     def sync(self):
         self.__class__.inc.sync(); self.__class__.src.sync()
         self.inc.sync(); self.src.sync()
+        self.__class__.dinc.giti.sync(); self.__class__.dsrc.giti.sync()
+        self.dinc.giti.sync(); self.dsrc.giti.sync()
         self.mk.sync(); self.cmake.sync()
 
     def __str__(self):
         return self.name
 
 class CPU(Cross):
-    def __init__(self, name, arch, cpudef=None):
-        super().__init__(name)
+    def __init__(self, name, arch, cdef=[], copt=[]):
+        super().__init__(name, cdef=cdef, copt=copt)
         (self.inc
          / f'#pragma once'
          / f'/// @defgroup {name} {name}'
@@ -166,7 +171,6 @@ class CPU(Cross):
          / '/// @{' / '/// @}'
          )
         self.mk / f'ARCH = {arch}'
-        if cpudef: self.cmake.add_compile_definitions / cpudef
 
     def sync(self):
         super().sync()
@@ -185,8 +189,8 @@ bare = OS('bare'); bare.sync()
 linux = OS('linux'); linux.sync()
 
 class ARCH(Cross):
-    def __init__(self, name, os):
-        super().__init__(name)
+    def __init__(self, name, os, cdef=[], copt=[]):
+        super().__init__(name, cdef=cdef, copt=copt)
         ingroup = 'cortexM' if re.match(r'cortexM\d+', name) else 'arch'
         (self.inc
          / f'#pragma once'
@@ -194,10 +198,14 @@ class ARCH(Cross):
          / f'/// @ingroup {ingroup}'
          / '/// @{' / '/// @}'
          )
+        if re.match(r'^cortexM', name):
+            self.mk / 'include arch/cortexM/cortexM.mk'
 
 x86_64 = ARCH('x86_64', os=linux); x86_64.sync()
-cortexM = ARCH('cortexM', os=bare); cortexM.sync()
-cortexM4 = ARCH('cortexM4', os=bare); cortexM4.sync()
+cortexM = ARCH('cortexM', os=bare,
+               cdef=['USE_HAL_DRIVER'], copt=['-mthumb']); cortexM.sync()
+cortexM4 = ARCH('cortexM4', os=bare,
+                cdef=['USE_HAL_DRIVER'], copt=['-mthumb']); cortexM4.sync()
 cortexM4.mk / 'include arch/cortexM/cortexM.mk'
 
 class HW(Cross):
@@ -225,7 +233,7 @@ arch = Dir('arch'); arch.sync()
 oz = Dir('os'); oz.sync()
 
 stm32l496agi = CPU('stm32l496agi', arch=cortexM4,
-                   cpudef='STM32L496xx'); stm32l496agi.sync()
+                   cdef=['STM32L496xx']); stm32l496agi.sync()
 l496disco = HW('l496disco', cpu=stm32l496agi); l496disco.sync()
 
 i5 = CPU('i5', arch=x86_64); i5.sync()
