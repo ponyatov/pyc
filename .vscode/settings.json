@@ -22,6 +22,8 @@
         "ref/**": true, "target/**": true,
     },
     "files.associations": {
+        "*.ld": "linkerscript", "*.ld.fix": "linkerscript",
+        "*.s": "arm", "*.s.fix": "arm", "*.S": "arm",
     },
 
     // JS
