@@ -1,4 +1,4 @@
-import os, sys
+import os, sys, re
 
 MODULE = os.getcwd().split('/')[-1]
 
@@ -122,13 +122,18 @@ class Cross(Object):
         # cross/hw/inc
         self.__class__.dinc = self.__class__.dir / Dir('inc')
         self.__class__.dinc.sync()
-        self.__class__.inc = self.__class__.dinc / File(f'{self.cname}.hpp')
+        self.__class__.hpp = (File(f'{self.cname}.hpp')
+                              / f'/// @defgroup {self.cname} {self.cname}'
+                              / f'/// @ingroup cross')
+        self.__class__.inc = self.__class__.dinc / self.__class__.hpp
         # cross/hw/src
         self.__class__.dsrc = self.__class__.dir / Dir('src')
         self.__class__.dsrc.sync()
-        self.__class__.src = self.__class__.dsrc / File(f'{self.cname}.cpp')
+        self.__class__.cpp = (File(f'{self.cname}.cpp')
+                              / f'#include "{self.cname}.hpp"')
+        self.__class__.src = self.__class__.dsrc / self.__class__.cpp
         # cross/hw/cross
-        self.dir = self.__class__.dir / Dir(name)
+        self.dir = self.__class__.dir / Dir(name); self.dir.sync()
         self.dinc = self.dir / Dir('inc'); self.dinc.sync()
         self.inc = self.dinc / File(f'{name}.hpp')
         self.dsrc = self.dir / Dir('src'); self.dsrc.sync()
@@ -152,8 +157,34 @@ class Cross(Object):
         return self.name
 
 class CPU(Cross):
+    def __init__(self, name, arch):
+        super().__init__(name)
+        (self.inc
+         / f'#pragma once'
+         / f'/// @defgroup {name} {name}'
+         / f'/// @ingroup {arch}'
+         / '/// @{' / '/// @}'
+         )
+        self.mk / f'CPU = {arch}'
+
     def sync(self):
         super().sync()
+
+class ARCH(Cross):
+    def __init__(self, name):
+        super().__init__(name)
+        ingroup = 'cortexM' if re.match(r'cortexM\d+', name) else 'arch'
+        (self.inc
+         / f'#pragma once'
+         / f'/// @defgroup {name} {name}'
+         / f'/// @ingroup {ingroup}'
+         / '/// @{' / '/// @}'
+         )
+
+x86_64 = ARCH('x86_64'); x86_64.sync()
+cortexM = ARCH('cortexM'); cortexM.sync()
+cortexM4 = ARCH('cortexM4'); cortexM4.sync()
+cortexM4.mk / 'include arch/cortexM/cortexM.mk'
 
 class HW(Cross):
     def __init__(self, name, cpu):
@@ -179,8 +210,8 @@ cpu = Dir('cpu'); cpu.sync()
 arch = Dir('arch'); arch.sync()
 oz = Dir('os'); oz.sync()
 
-stm32l496agi = CPU('stm32l496agi'); stm32l496agi.sync()
+stm32l496agi = CPU('stm32l496agi', arch=cortexM4); stm32l496agi.sync()
 l496disco = HW('l496disco', cpu=stm32l496agi); l496disco.sync()
 
-i5 = CPU('i5'); i5.sync()
+i5 = CPU('i5', arch=x86_64); i5.sync()
 pc = HW('pc', cpu=i5); pc.sync()
