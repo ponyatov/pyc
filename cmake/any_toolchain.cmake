@@ -24,7 +24,6 @@ string(TOUPPER ${HW}   HW_  )
 string(TOUPPER ${CPU}  CPU_ )
 string(TOUPPER ${ARCH} ARCH_)
 string(TOUPPER ${OS}   OS_  )
-string(TOUPPER ${APP}  APP_ )
 
 add_compile_options(
     "-D${HW_}" "-D${CPU_}" "-D${ARCH_}" "-D${OS_}"
