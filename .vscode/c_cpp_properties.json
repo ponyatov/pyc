@@ -5,10 +5,11 @@
         {
             "name": "cmake",
             "configurationProvider": "ms-vscode.cmake-tools",
-            "compilerArgs": [
-                // "-UUSER_VECT_TAB_ADDRESS"
-            ],
-            "defines": ["HAVE_INIT_FINI", "HAVE_INITFINI_ARRAY"]
+            "defines": [
+                //
+                "HAVE_INIT_FINI",
+                "HAVE_INITFINI_ARRAY"
+            ]
         }
     ]
 }
