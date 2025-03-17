@@ -106,8 +106,8 @@ class CMakePresets(File):
             '"configurePresets": [', ']') / self.common / self.linux
         self / (S('{', '}') / '"version": 6,' / self.configurePresets)
 
-cmk = CMakeLists(); cmk.sync()
-cpr = CMakePresets(); cpr.sync()
+cmk = CMakeLists()
+cpr = CMakePresets()
 
 class Cross(Object):
     def __init__(self, name):
@@ -124,31 +124,38 @@ class Cross(Object):
         self.__class__.dsrc = self.__class__.dir / Dir('src')
         self.__class__.dsrc.sync()
         self.__class__.src = self.__class__.dsrc / File(f'{cname}.cpp')
-        # (self.__class__.dir / Dir('src')).sync()
-        # self.dir = self.__class__.dir / Dir(name)
-        # self.dir.sync()
-        # self.dinc = self.dir / Dir('inc');self.dinc.sync()
-        # self.inc = self.dinc / File(f'{name}.hpp')
-        # self.dsrc = self.dir / Dir('src');self.dsrc.sync()
-        # self.src = self.dsrc / File(f'{name}.cpp')
+        # cross/hw/cross
+        self.dir = self.__class__.dir / Dir(name)
+        self.dir.sync()
+        self.dinc = self.dir / Dir('inc'); self.dinc.sync()
+        self.inc = self.dinc / File(f'{name}.hpp')
+        self.dsrc = self.dir / Dir('src'); self.dsrc.sync()
+        self.src = self.dsrc / File(f'{name}.cpp')
+        # cross/hw/cross.mk
+        self.mk = self.dir / File(f'{name}.mk')
+        # cross/hw/cross.cmake
+        self.cmake = self.dir / File(f'{name}.cmake')
 
     def sync(self):
         self.__class__.inc.sync()
         self.inc.sync(); self.src.sync()
+        self.mk.sync(); self.cmake.sync()
 
 class CPU(Cross):
     def sync(self):
         super().sync()
 
-STM32L496AGI = CPU('STM32L496AGI'); STM32L496AGI.sync()
+stm32l496agi = CPU('stm32l496agi'); stm32l496agi.sync()
 
 class HW(Cross):
     def __init__(self, name, cpu):
         super().__init__(name)
         self.ioc = self.dir / File(f'{name}.ioc')
+        self.gdb = self.dir / File(f'{name}.gdb')
+        self.ocd = self.dir / File(f'{name}.ocd')
 
     def sync(self):
         super().sync()
-        # self.ioc.sync()
+        self.gdb.sync(); self.ocd.sync()
 
-l496disco = HW('l496disco', cpu=STM32L496AGI); l496disco.sync()
+l496disco = HW('l496disco', cpu=stm32l496agi); l496disco.sync()
