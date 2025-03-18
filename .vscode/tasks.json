@@ -18,7 +18,7 @@
         {
             "label"          : "python: run",
             "type"           : "shell",
-            "command"        : "python3 src/${workspaceFolderBasename}.py lib/${workspaceFolderBasename}.ini",
+            "command"        : "python3 meta/${workspaceFolderBasename}.py lib/${workspaceFolderBasename}.ini",
             "problemMatcher" : [],
             "group"          : {"kind": "build","isDefault": true}
         }

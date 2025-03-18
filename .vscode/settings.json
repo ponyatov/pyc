@@ -17,6 +17,7 @@
     // files
     "files.exclude": {
         "doc/html/**": true,
+        "**/__pycache__": true,
     },
     "files.watcherExclude": {
         "ref/**": true, "target/**": true,
@@ -80,6 +81,7 @@
         "editor.defaultFormatter" : "ms-python.autopep8",
         "editor.formatOnSave"     :  false
     },
+    "python.analysis.extraPaths": ["src","meta"],
 
     // MinGW/MSYS2
     "terminal.integrated.defaultProfile.windows": "UCRT64",
