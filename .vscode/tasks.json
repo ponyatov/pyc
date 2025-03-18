@@ -20,7 +20,14 @@
             "type"           : "shell",
             "command"        : "python3 meta/${workspaceFolderBasename}.py lib/${workspaceFolderBasename}.ini",
             "problemMatcher" : [],
-            "group"          : {"kind": "build","isDefault": true}
+            "group"          : {"kind": "build", "isDefault": true}
+        },
+        {
+            "label"          : "binpac: hello",
+            "type"           : "shell",
+            "command"        : "binpac -D proto/hello.binpac",
+            "problemMatcher" : [],
+            "group"          : {"kind": "build", "isDefault": true}
         }
     ]
 }
