@@ -25,7 +25,7 @@
         {
             "label"          : "binpac: hello",
             "type"           : "shell",
-            "command"        : "binpac -D proto/hello.binpac",
+            "command"        : "binpac -D -d tmp proto/hello.binpac && g++ -o bin/hello tmp/hello.binpac_pac.cc",
             "problemMatcher" : [],
             "group"          : {"kind": "build", "isDefault": true}
         }
