@@ -13,8 +13,9 @@ class IO(Object):
 
 class File(IO):
     def sync(self):
-        with open(self.path, 'w') as f:
-            for i in self.nest: print(i, file=f)
+        with open(self.path, 'a') as f: pass
+        # with open(self.path, 'w') as f:
+        #     for i in self.nest: print(i, file=f)
 
 class Dir(IO):
 
@@ -48,14 +49,31 @@ for i in DIRS:
               / f'#include "{i}.hpp"'))
     d.sync()
 
-hw = Dir('hw')
+class Cross(Object):
+    def __init__(self, name, subdir):
+        super().__init__(name)
+        self.subdir = subdir
 
-class HW(Object):
     def sync(self):
-        d = Dir(self.val()); hw / d
+        d = Dir(self.val()); self.subdir / d
         d / File(f'{self.val()}.mk')
         d / File(f'{self.val()}.cmake')
         d.sync()
 
+class HW(Cross):
+    def __init__(self, name): super().__init__(name, Dir('hw'))
+
+class CPU(Cross):
+    def __init__(self, name): super().__init__(name, Dir('cpu'))
+
+class ARCH(Cross):
+    def __init__(self, name): super().__init__(name, Dir('arch'))
+
+class OS(Cross):
+    def __init__(self, name): super().__init__(name, Dir('os'))
+
 
 for h in ['pc', 'f429disco']: HW(h).sync()
+for c in ['i5', 'stm32f429zi']: CPU(c).sync()
+for a in ['x86_64', 'cortexM', 'cortexM4']: ARCH(a).sync()
+for s in ['bare','linux']: OS(s).sync()
