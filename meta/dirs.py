@@ -31,7 +31,7 @@ class Dir(Object):
 
 for i in DIRS:
     d = Dir(i)
-    if i in ['hw']:
+    if i in ['hw', 'cpu', 'arch', 'os']:
         h = Dir('inc'); d / h
         c = Dir('src'); d / c
     d.sync()
