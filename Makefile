@@ -1,3 +1,14 @@
+HW = f496disco
+
+include   hw/$(HW).mk
+include  cpu/$(CPU).mk
+include arch/$(ARCH).mk
+include   os/$(OS).mk
+
+.PHONY: all run
+all:
+run:
+
 .PHONY: install update
 install:
 	$(MAKE) update

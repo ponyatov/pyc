@@ -53,7 +53,9 @@ hw = Dir('hw')
 class HW(Object):
     def sync(self):
         d = Dir(self.val()); hw / d
+        d / File(f'{self.val()}.mk')
+        d / File(f'{self.val()}.cmake')
         d.sync()
 
 
-for h in ['pc', 'f496disco']: HW(h).sync()
+for h in ['pc', 'f429disco']: HW(h).sync()
