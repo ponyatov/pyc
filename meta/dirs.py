@@ -56,6 +56,8 @@ class Cross(Object):
 
     def sync(self):
         d = Dir(self.val()); self.subdir / d
+        hpp = Dir('inc'); d / hpp; hpp / File(f'{self.val()}.hpp')
+        cpp = Dir('src'); d / cpp; cpp / File(f'{self.val()}.cpp')
         d / File(f'{self.val()}.mk')
         d / File(f'{self.val()}.cmake')
         d.sync()
@@ -76,4 +78,4 @@ class OS(Cross):
 for h in ['pc', 'f429disco']: HW(h).sync()
 for c in ['i5', 'stm32f429zi']: CPU(c).sync()
 for a in ['x86_64', 'cortexM', 'cortexM4']: ARCH(a).sync()
-for s in ['bare','linux']: OS(s).sync()
+for s in ['bare', 'linux']: OS(s).sync()
