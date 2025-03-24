@@ -1,14 +1,15 @@
 {
     "version": 4,
-    "env": {},
+    "env":{
+    },
     "configurations": [
         {
-            "name": "cmake",
+            "name"                 : "cmake",
             "configurationProvider": "ms-vscode.cmake-tools",
+            "mergeConfigurations"  :  true,
+            "includePath": [
+            ],
             "defines": [
-                //
-                "HAVE_INIT_FINI",
-                "HAVE_INITFINI_ARRAY"
             ]
         }
     ]

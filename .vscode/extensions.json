@@ -5,12 +5,19 @@
         "tabnine.tabnine-vscode",
         "ms-vscode.makefile-tools",
         "IBM.output-colorizer",
+        // Linux
+        "ms-vscode-remote.remote-ssh",
+        "coolbear.systemd-unit-file",
         // formatters
         "xaver.clang-format",
         "foxundermoon.shell-format",
         "esbenp.prettier-vscode",
         // misc
         "usernamehw.errorlens",
+        // "hbenl.vscode-test-explorer",
+        // Web
+        "esbenp.prettier-vscode",
+        "mechatroner.rainbow-csv",
         // C++
         "ms-vscode.cpptools",
         "jeff-hykin.better-cpp-syntax",
@@ -19,13 +26,10 @@
         // parser
         "daohong-emilio.yash",
         "rreverser.ragel",
-        "supremeconset.binpac-vscode-extension",
         // embedded
         "dan-c-underwood.arm",
         "zixuanwang.linkerscript",
         "ms-vscode.vscode-serial-monitor",
-        // "awsxxf.serialterminal",
-        // "ms-vscode.hexeditor",
         // "espressif.esp-idf-extension",
         // Python
         "ms-python.python",
