@@ -1,4 +1,5 @@
 import os
+import re
 
 from obj import *
 
@@ -13,9 +14,11 @@ class IO(Object):
 
 class File(IO):
     def sync(self):
-        # with open(self.path, 'a') as f: pass
-        with open(self.path, 'w') as f:
-            for i in self.nest: print(i, file=f)
+        if re.match(r'.+\.(mk|cmake)$',self.path):
+            with open(self.path, 'a') as f: pass
+        else:
+            with open(self.path, 'w') as f:
+                for i in self.nest: print(i, file=f)
 
 class Dir(IO):
 
