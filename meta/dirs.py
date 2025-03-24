@@ -35,3 +35,9 @@ for i in DIRS:
         h = Dir('inc'); d / h
         c = Dir('src'); d / c
     d.sync()
+
+class HW(Object):
+    def sync(self):
+        (Dir('hw') / Dir(self.val())).sync()
+
+for h in ['pc', 'f496disco']: HW(h).sync()
