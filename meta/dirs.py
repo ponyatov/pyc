@@ -13,9 +13,9 @@ class IO(Object):
 
 class File(IO):
     def sync(self):
-        with open(self.path, 'a') as f: pass
-        # with open(self.path, 'w') as f:
-        #     for i in self.nest: print(i, file=f)
+        # with open(self.path, 'a') as f: pass
+        with open(self.path, 'w') as f:
+            for i in self.nest: print(i, file=f)
 
 class Dir(IO):
 
@@ -56,8 +56,13 @@ class Cross(Object):
 
     def sync(self):
         d = Dir(self.val()); self.subdir / d
-        hpp = Dir('inc'); d / hpp; hpp / File(f'{self.val()}.hpp')
-        cpp = Dir('src'); d / cpp; cpp / File(f'{self.val()}.cpp')
+        hpp = Dir('inc'); d / hpp; hpp / \
+            (File(f'{self.val()}.hpp')
+             / f'#pragma once'
+             / f'/// @defgroup {self.val()} {self.val()}'
+             / f'/// @ingroup {self.tag()}')
+        cpp = Dir('src'); d / cpp; cpp / \
+            (File(f'{self.val()}.cpp') / f'#include "{self.val()}.hpp"')
         d / File(f'{self.val()}.mk')
         d / File(f'{self.val()}.cmake')
         d.sync()
