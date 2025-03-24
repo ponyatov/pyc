@@ -1,5 +1,4 @@
 #include "pyc.hpp"
-int main() {
-// <return:0>
+__attribute__((weak)) int main() {
+    return 0;
 }
-

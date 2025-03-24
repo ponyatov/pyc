@@ -15,10 +15,8 @@ class Module(Object):
         return ret
 
     def sync(self):
-        with open(f'inc/{self.name}.hpp', 'w') as f:
-            print(self.hpp(), file=f)
-        with open(f'src/{self.name}.cpp', 'w') as f:
-            print(self.cpp(), file=f)
+        with open(f'inc/{self.name}.hpp', 'w') as f: f.write(self.hpp())
+        with open(f'src/{self.name}.cpp', 'w') as f: f.write(self.cpp())
 
 pyca = Module(MODULE) / main
 pyca.sync()
