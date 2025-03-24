@@ -2,23 +2,51 @@
     "version": 6,
     "buildPresets": [
         {
-            "name": "linux",
-            "configurePreset": "linux",
-            "targets": ["all", "install"]
+            "name"            :  "f429disco",
+            "configurePreset" :  "f429disco",
+            "targets"         : ["all","install"]
+        },
+        {
+            "name"            :  "linux",
+            "configurePreset" :  "linux",
+            "targets"         : ["all","install"]
         }
     ],
     "configurePresets": [
         {
-            "name": "common",
-            "hidden": true,
-            "binaryDir": "${sourceDir}/tmp/${presetName}",
-            "generator": "Unix Makefiles",
-            "cacheVariables": {
-                "CMAKE_INSTALL_PREFIX": "${sourceDir}/bin",
-                "CMAKE_MODULE_PATH": "${sourceDir}/cmake",
-                "CMAKE_COLOR_DIAGNOSTICS": false,
-                "CMAKE_BUILD_TYPE": "Debug",
-                "CMAKE_VERBOSE_MAKEFILE": false
+            "name"            : "common",
+            "hidden"          :  true,
+            "binaryDir"       : "${sourceDir}/tmp/${presetName}",
+            "generator"       : "Unix Makefiles",
+            "cacheVariables"  : {
+                "CMAKE_INSTALL_PREFIX"    : "${sourceDir}/bin",
+                "CMAKE_MODULE_PATH"       : "${sourceDir}/cmake",
+                "CMAKE_COLOR_DIAGNOSTICS" :  false,
+                "CMAKE_BUILD_TYPE"        : "Debug",
+                "CMAKE_VERBOSE_MAKEFILE"  :  false
+            }
+        },
+        {
+            "name"           : "cortexM",
+            "inherits"       : "common",
+            "hidden"         :  true,
+            "toolchainFile"  : "${sourceDir}/cmake/arm-none-eabi.cmake",
+            "cacheVariables" : {
+                "OS":"bare"
+            }
+        },
+        {
+            "name"           : "cortexM4",
+            "inherits"       : "cortexM",
+            "hidden"         :  true,
+            "cacheVariables" : {"ARCH":"cortexM4"}
+        },
+        {
+            "name"           : "f429disco",
+            "inherits"       : "cortexM4",
+            "cacheVariables" : {
+                "HW" :"f429disco",
+                "CPU":"stm32f429zi", "SERIES": "STM32F4"
             }
         },
         {
