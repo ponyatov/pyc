@@ -25,6 +25,7 @@ file(GLOB C
     hw/${HW}/USB_DEVICE/App/*.c* hw/${HW}/USB_DEVICE/Target/*.c*
     hw/${HW}/Middlewares/ST/STM32_USB_Device_Library/Core/Src/*.c*
     hw/${HW}/Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Src/*.c*
+    hw/${HW}/Middlewares/ST/STM32_USB_Device_Library/Class/AUDIO/Src/*.c*
 )
 
 file(GLOB H
@@ -45,10 +46,12 @@ file(GLOB H
     hw/${HW}/USB_DEVICE/App/*.h* hw/${HW}/USB_DEVICE/Target/*.h*
     hw/${HW}/Middlewares/ST/STM32_USB_Device_Library/Core/Inc/*.h*
     hw/${HW}/Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc/*.h*
+    hw/${HW}/Middlewares/ST/STM32_USB_Device_Library/Class/AUDIO/Inc/*.h*
 )
 
 file(GLOB INC
-    RELATIVE ${CMAKE_SOURCE_DIR} ${CMAKE_BINARY_DIR}
+    RELATIVE ${CMAKE_SOURCE_DIR}
+    ${CMAKE_BINARY_DIR}
     inc
     # cross
       hw/inc   hw/${HW}/inc
@@ -65,20 +68,24 @@ file(GLOB INC
     hw/${HW}/USB_DEVICE/App hw/${HW}/USB_DEVICE/Target
     hw/${HW}/Middlewares/ST/STM32_USB_Device_Library/Core/Inc
     hw/${HW}/Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc
+    hw/${HW}/Middlewares/ST/STM32_USB_Device_Library/Class/AUDIO/Inc
 )
 include_directories(${INC})
 
 file(GLOB L
     RELATIVE ${CMAKE_SOURCE_DIR}
-    src/*.lex lib/src/*.lex lib/*/src/*.lex
+    src/*.lex
+    lib/src/*.lex lib/*/src/*.lex
 )
 
 file(GLOB Y
     RELATIVE ${CMAKE_SOURCE_DIR}
-    src/*.yacc lib/src/*.yacc lib/*/src/*.yacc
+    src/*.yacc
+    lib/src/*.yacc lib/*/src/*.yacc
 )
 
 file(GLOB R
     RELATIVE ${CMAKE_SOURCE_DIR}
-    src/*.ragel lib/src/*.ragel lib/*/src/*.ragel
+    src/*.ragel
+    lib/src/*.ragel lib/*/src/*.ragel
 )
