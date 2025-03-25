@@ -18,7 +18,46 @@ YEAR = dt.date.today().year
 
 ## @brief root @ref Object : common for all types
 ## @ingroup object
-class Object: pass
+class Object:
+    def __init__(self, V=None, **kv):
+        self.value = V ##< scalar value: object name
+        self.nest = [] ##< nested elements sub-tree = vector = stack
+        self.slot = {} ##< attributes = map
+        for k, v in kv.items(): self[k] = v
+
+    ## wrap Python object into compiler class
+    def _(some):
+        match some:
+            case Object(): return some
+            case _: return Str(f'{some}')
+
+    def __setitem__(self, k, v):
+        assert isinstance(k, str)
+        self.slot[k] = Object._(v)
+
+    def tag(self): return self.__class__.__name__.lower()
+
+    def val(self):
+        if self.value is not None: return f'{self.value}'
+        else: return ''
+
+    def __repr__(self): return self.dump()
+
+    def dump(self, depth=0, prefix=''):
+        def pad(depth): return '\n' + '\t' * depth
+        ret = pad(depth) + self.head(prefix)
+        for k,v in self.slot.items(): ret += v.dump(depth+1,f'{k} = ')
+        return ret
+
+    def head(self, prefix=''):
+        return f'{prefix}<{self.tag()}:{self.val()}>'
+
+    ## @brief dump compiler structure
+    def sync(self): print(self)
+
+    ## @brief `//`
+    def __floordiv__(self, o):
+        self.nest.append(o); return self
 
 ## @defgroup prim prim
 ## @ingroup object
@@ -26,12 +65,24 @@ class Object: pass
 
 ## @brief primitive
 ## @ingroup prim
-class Prim(Object): pass
+class Prim(Object):
+    def __init__(self, V):
+        super().__init__(V)
+        self.pfx = [] ##< prefix strings
+        self.dfx = [] ##< suffix string
 
-## @brief source code / string
+## @brief source `C`ode (string tree)
+## @ingroup prim
+class C(Prim): pass
+
+## @brief code section
 ## @ingroup prim
 class S(Prim): pass
+    # def __init__(self, V): super().__init__(V)
 
+## @brief generic string
+## @ingroup prim
+class Str(Prim): pass
 
 ## @defgroup cont cont
 ## @brief container
@@ -48,20 +99,27 @@ class Cont(Object): pass
 ## @ingroup meta
 class Meta(Object): pass
 
+class Module(Meta):
+    def __init__(self, V=MODULE):
+        super().__init__(V, module=MODULE)
+
 ## @defgroup io io
-## @brief I/O
+## @brief file I/O
 ## @ingroup object
 
+## @brief file I/O
 ## @ingroup io
 class IO(Object):
     def __init__(self, name):
-        self.name = name
+        self.path = [name] ##< dir/file path
 
 ## @ingroup io
 class Dir(IO):
     def sync(self):
-        try: _os.mkdir(self.path)
-        except FileExistsError: pass
+        print(f'sync: {self.path}')
+        # try: _os.mkdir(self.path)
+        # except FileExistsError: pass
+
 ## @ingroup io
 class File(IO):
     def sync(self): self.path.sync()
@@ -146,7 +204,5 @@ python3 python3-venv python3-ply''', file=f)
         if mingw64:
             print('''g++-mingw-w64-x86-64 gdb-mingw-w64 wine64 wine64-tools''', file=f)
 
-# ## @brief regenerate file tree structure
-# def genfiles():
-#     for component in [dirs, giti, cross, readme, apt]: component()
-# genfiles()
+# ## @brief regenerate project tree structure
+print(Module())
